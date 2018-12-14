@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-
-
-
+import NavFields from './components/NavFields';
+import PageContent from './components/PageContent';
 
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {}
+    this.state = {
+        signedIn: false
+    };
   }
-  componentDidUpdate() {
 
+  render() {
+    return (
+    <main>
+      <NavFields />
+      <PageContent />
+    </main>
+    )
   };
-
-  componentDidMount() {
-
-  }
-
-  render() { };
 }
 
 export default App;
