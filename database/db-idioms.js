@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let IdiomSchema = new Schema ({
+let EntriesSchema = new Schema ({
   term: String,
   definition: String,
   upVotes: Number,
@@ -10,4 +10,4 @@ let IdiomSchema = new Schema ({
   tags: [String]
 })
 
-let Idioms = mongoose.model('users', UserSchema);
+let Entries = mongoose.model('entries', EntriesSchema);
