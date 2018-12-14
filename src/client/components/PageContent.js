@@ -13,7 +13,7 @@ class PageContent extends Component {
         term: 'Hola Dude',
         definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         createdBy: 'Briandaman',
-        upvotes: 2,
+        upvotes: 0,
         downvotes: 0,
         id: 1
       },
@@ -29,7 +29,7 @@ class PageContent extends Component {
         term: 'Backpack',
         definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         createdBy: 'Briandaman',
-        upvotes: 3,
+        upvotes: 4,
         downvotes: 0,
         id: 3
       }],
@@ -46,7 +46,7 @@ class PageContent extends Component {
         entriesToRender,
         searchValue: event.target.value
       })
-      console.log("handle submit", this.state.entriesToRender)
+
     }
     this.handleAllEntries = (event) => {
       this.setState({ entriesToRender: this.state.entries })
@@ -57,16 +57,27 @@ class PageContent extends Component {
       let index = entriesCopy.findIndex((entry) => {
         return entry.id == parseInt(event.target.id)
       })
-      console.log("index", index)
-      entriesCopy[index].upvote = entriesCopy[index].upvote++;
-      console.log(entriesCopy[index].upvote++)
+
+      entriesCopy[index].upvotes = entriesCopy[index].upvotes + 1;
+
       this.setState({
-        entries: entriesCopy
+        entries: entriesCopy,
+        entriesToRender: entriesCopy
       })
     })
 
-    this.handleDownvote = (event) => {
-    }
+    this.handleDownvote = ((event) => {
+      let entriesCopy = JSON.parse(JSON.stringify(this.state.entries))
+      let index = entriesCopy.findIndex((entry) => {
+        return entry.id == parseInt(event.target.id)
+      })
+      entriesCopy[index].downvotes = entriesCopy[index].downvotes + 1
+      this.setState({
+        entries: entriesCopy,
+        entriesToRender: entriesCopy
+      })
+
+    })
   }
   componentDidUpdate() {
     //console.log("did update", this.state.entries)
@@ -86,27 +97,27 @@ class PageContent extends Component {
     if (this.props.signUp) {
       return (
         <section>
-        <h1>Hello Devs!</h1>
-        <SignUpModal closeSignUpModal={this.props.closeSignUpModal} />
-        <SearchBar
-          searchValue={this.state.searchValue}
-          handleSearchChange={this.handleSearchChange}
-          handleAllEntries={this.handleAllEntries}
-        />
-        <EntryList entriesToRender={this.state.entriesToRender}/>
-      </section>
+          <h1>Urban Developtionary</h1>
+          <SignUpModal closeSignUpModal={this.props.closeSignUpModal} />
+          <SearchBar
+            searchValue={this.state.searchValue}
+            handleSearchChange={this.handleSearchChange}
+            handleAllEntries={this.handleAllEntries}
+          />
+          <EntryList entriesToRender={this.state.entriesToRender} />
+        </section>
       )
-    } else if(this.props.signedIn) {
+    } else if (this.props.signedIn) {
       return (
         <section>
-          <h1>Hello Devs!</h1>
+          <h1>Urban Developtionary</h1>
           <SearchBar
             searchValue={this.state.searchValue}
             handleSearchChange={this.handleSearchChange}
             handleAllEntries={this.handleAllEntries}
           />
           <CreateEntry />
-          <EntryList entriesToRender={this.state.entriesToRender}/>
+          <EntryList entriesToRender={this.state.entriesToRender} handleUpvote={this.handleUpvote} handleDownvote={this.handleDownvote} />
         </section>
       )
     }
@@ -118,7 +129,7 @@ class PageContent extends Component {
           handleSearchChange={this.handleSearchChange}
           handleAllEntries={this.handleAllEntries}
         />
-        <EntryList entriesToRender={this.state.entriesToRender} handleUpvote={this.handleUpvote} />
+        <EntryList entriesToRender={this.state.entriesToRender} />
       </section>
     )
   }

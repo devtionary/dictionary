@@ -13,8 +13,8 @@ class EntryItem extends Component {
         <p>{this.props.definition}</p>
         <ul>
           <li>Created by: {this.props.createdBy}</li>
-          <button onClick={this.props.handleUpvote} id={this.props.id} > {this.props.upvotes}</button>
-          <li>{this.props.downvotes}</li>
+          <p>Upvote: </p><button onClick={this.props.handleUpvote} id={this.props.id} > {this.props.upvotes}</button>
+          <p>Downvote: </p><button onClick={this.props.handleDownvote} id={this.props.id}>{this.props.downvotes}</button>
         </ul>
       </article>
     )
