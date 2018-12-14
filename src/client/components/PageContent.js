@@ -76,7 +76,7 @@ class PageContent extends Component {
           handleSearchChange={this.handleSearchChange}
           handleSearchSubmit={this.handleSearchSubmit}
         />
-        <EntryList />
+        <EntryList entriesToRender={this.state.entriesToRender}/>
       </section>
       )
     } else if(this.props.signedIn) {
@@ -89,7 +89,7 @@ class PageContent extends Component {
             handleSearchSubmit={this.handleSearchSubmit}
           />
           <CreateEntry />
-          <EntryList />
+          <EntryList entriesToRender={this.state.entriesToRender}/>
         </section>
       )
     }
