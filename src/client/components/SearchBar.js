@@ -13,7 +13,7 @@ class SearchBar extends Component {
           type="text"
           placeholder="Search for term..."
         />
-        <button type="button" onClick={this.props.handleSearchSubmit}>Search</button>
+        <button type="button" onClick={this.props.handleAllEntries}>See All Entries</button>
       </div>
     )
   }
