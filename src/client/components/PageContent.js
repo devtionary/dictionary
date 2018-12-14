@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
+import EntryList from './EntryList';
 
 class PageContent extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class PageContent extends Component {
           handleSearchChange={this.handleSearchChange}
           handleSearchSubmit={this.handleSearchSubmit}
         />
+        <EntryList />
       </section>
     )
   }

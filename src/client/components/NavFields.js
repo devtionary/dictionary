@@ -15,6 +15,11 @@ class NavFields extends Component {
     };
   }
   render() {
+    if (this.props.signedIn) {
+      return (
+        <button id="logoutButton">Logout</button>
+      )
+    }
     return (
       <nav>
         <nav>
