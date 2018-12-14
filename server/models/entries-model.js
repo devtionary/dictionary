@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+mongoose.connect('mongodb://localhost/dictionary');
 
-let EntriesSchema = new Schema ({
+const entriesSchema = new Schema ({
   term: String,
   definition: String,
   upVotes: Number,
@@ -10,4 +11,6 @@ let EntriesSchema = new Schema ({
   tags: [String]
 })
 
-let Entries = mongoose.model('entries', EntriesSchema);
+const Entries = mongoose.model('entries', entriesSchema);
+
+module.exports = (Entries);
