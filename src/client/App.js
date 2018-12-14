@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     return (
     <main>
-      <NavFields />
+      <NavFields signedIn={this.state.signedIn} />
       <PageContent />
     </main>
     )
