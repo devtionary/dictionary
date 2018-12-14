@@ -74,7 +74,7 @@ class PageContent extends Component {
         <SearchBar
           searchValue={this.state.searchValue}
           handleSearchChange={this.handleSearchChange}
-          handleSearchSubmit={this.handleSearchSubmit}
+          handleAllEntries={this.handleAllEntries}
         />
         <EntryList entriesToRender={this.state.entriesToRender}/>
       </section>
@@ -86,7 +86,7 @@ class PageContent extends Component {
           <SearchBar
             searchValue={this.state.searchValue}
             handleSearchChange={this.handleSearchChange}
-            handleSearchSubmit={this.handleSearchSubmit}
+            handleAllEntries={this.handleAllEntries}
           />
           <CreateEntry />
           <EntryList entriesToRender={this.state.entriesToRender}/>
