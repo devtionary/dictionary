@@ -29,6 +29,7 @@ class EntryList extends Component {
         downvotes={entry.downvotes}
         id={entry.id}
         handleUpvote={this.props.handleUpvote}
+        handleDownvote={this.props.handleDownvote}
       />
 
     });
