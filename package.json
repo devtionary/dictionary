@@ -23,16 +23,17 @@
     "hamoni-sync": "^1.1.1",
     "html-webpack-plugin": "^3.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.3.16",
     "nodemon": "^1.18.7",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.3.1",
+    "react-router-dom": "^4.3.1",
     "request": "^2.88.0",
     "style-loader": "^0.23.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "react-router-dom": "^4.3.1",
-    "mongoose": "^5.3.16"
+    "webpack-dev-server": "^3.1.10"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
