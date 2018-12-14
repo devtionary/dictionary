@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import EntryList from './EntryList';
+import SignUpModal from './SignUpModal';
+import CreateEntry from './CreateEntry';
 
 class PageContent extends Component {
   constructor(props) {
@@ -30,7 +32,6 @@ class PageContent extends Component {
       }],
       entriesToRender: []
     }
-
     this.handleSearchChange = (event) => {
       this.setState({ searchValue: event.target.value });
       console.log("handle change", this.state.searchValue)
@@ -65,6 +66,33 @@ class PageContent extends Component {
   // }
 
   render() {
+    if (this.props.signUp) {
+      return (
+        <section>
+        <h1>Hello Devs!</h1>
+        <SignUpModal closeSignUpModal={this.props.closeSignUpModal} />
+        <SearchBar
+          searchValue={this.state.searchValue}
+          handleSearchChange={this.handleSearchChange}
+          handleSearchSubmit={this.handleSearchSubmit}
+        />
+        <EntryList />
+      </section>
+      )
+    } else if(this.props.signedIn) {
+      return (
+        <section>
+          <h1>Hello Devs!</h1>
+          <SearchBar
+            searchValue={this.state.searchValue}
+            handleSearchChange={this.handleSearchChange}
+            handleSearchSubmit={this.handleSearchSubmit}
+          />
+          <CreateEntry />
+          <EntryList />
+        </section>
+      )
+    }
     return (
       <section>
         <h1>Urban Developtionary</h1>
