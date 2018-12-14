@@ -7,13 +7,13 @@ class SearchBar extends Component {
   render() {
     return (
       <div>
-        <input 
-        value={this.props.searchValue}
-        onChange={this.props.handleSearchChange}
-        type="text" 
-        placeholder ="Search for term..."
+        <input
+          value={this.props.searchValue}
+          onChange={this.props.handleSearchChange}
+          type="text"
+          placeholder="Search for term..."
         />
-        <button type="button">Search</button>
+        <button type="button" onClick={this.props.handleSearchSubmit}>Search</button>
       </div>
     )
   }
