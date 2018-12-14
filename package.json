@@ -1,0 +1,45 @@
+{
+  "name": "poster-tour-inventory-app",
+  "description": "Inventory management app for The College Poster Tour",
+  "version": "1.0.0",
+  "main": "index.js",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "scripts": {
+    "webpack": "webpack --mode development",
+    "start": "nodemon server/server.js",
+    "start:dev": "webpack-dev-server --mode development --devtool inline-source-map --hot"
+  },
+  "author": "Altai Chiang <altai.chiang@gmail.com>",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "clean-webpack-plugin": "^1.0.0",
+    "css-loader": "^0.28.11",
+    "express": "^4.12.3",
+    "hamoni-sync": "^1.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "nodemon": "^1.18.7",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.3.1",
+    "request": "^2.88.0",
+    "style-loader": "^0.23.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "react-router-dom": "^4.3.1",
+    "mongoose": "^5.3.16"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.27.1"
+  }
+}
