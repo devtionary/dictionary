@@ -6,13 +6,14 @@ class EntryItem extends Component {
   }
 
   render() {
+
     return (
       <article>
         <h3>{this.props.term}</h3>
         <p>{this.props.definition}</p>
         <ul>
           <li>Created by: {this.props.createdBy}</li>
-          <li>{this.props.upvotes}</li>
+          <button onClick={this.props.handleUpvote} id={this.props.id} > {this.props.upvotes}</button>
           <li>{this.props.downvotes}</li>
         </ul>
       </article>

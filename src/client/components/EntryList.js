@@ -11,7 +11,8 @@ class EntryList extends Component {
           definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
           createdBy: 'Briandaman',
           upvotes: 3,
-          downvotes: 0
+          downvotes: 0,
+
         }
       ]
     }
@@ -26,8 +27,12 @@ class EntryList extends Component {
         createdBy={entry.createdBy}
         upvotes={entry.upvotes}
         downvotes={entry.downvotes}
+        id={entry.id}
+        handleUpvote={this.props.handleUpvote}
       />
+
     });
+
     return (
       <div>
         {entries}
