@@ -7,6 +7,7 @@ const http = require('http');
 const MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 const Users = require('./models/user-model.js')
+const Entries = require('./models/entries-model.js')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -17,50 +18,46 @@ mongoose.connection.once('open', () => {
 
 
 
-let newUser = {
-  userName: "Altai",
-  password: "giraffe",
-  entries: "a, b, c",
-  badEntries: 3
-}
-
-let userDoc = new Users(newUser);
-
-userDoc.save((err) => {
-  if (err) return handleError(err);
-});
-// MongoClient.connect('mongodb://localhost/dictionary', (err, database) => {
-//       // ... start the server
-//   // var dbase = db.db("dictionary");
-//   if (err) return console.log(err);
-//   app.listen(3000, () => console.log(`we live on port 3000`));
-// })
+// let newUser = {
+//   userName: "Leury",
+//   password: "kittens88",
+//   entries: "yada, yada, yoo",
+//   badEntries: 44
+// }
+// let userDoc = new Users(newUser);
 //
-// mongoose.connection.once('open', () => {
-//   console.log('connected with MongoDB Dictionary')
-// })
-//
-// const server = http.createServer(app)
-//
-// app.post('/signup', (req, res, next) => {
-//
-//   var user = {
-//     first_name: req.body.first_name,
-//     last_name: req.body.last_name
-//   };
-//
-//   dbase.collection("users").save(user, (err, result) => {
-//     if(err) {
-//       console.log(err);
-//     }
-//
-//     res.send('user added successfully');
-//   });
+// userDoc.save((err) => {
+//   if (err) return handleError(err);
 // });
-//
-// app.get('/', function(req, res) {
-//   res.send("Yep it's working");
+
+// let newEntry = {
+//   term: 'gtegte',
+//   definition: 'yyyyy',
+//   upVotes: 2,
+//   downVotes: 2,
+//   createdBy: 'aiDaMon',
+//   tags: ['v', 'e', 'd']
+// }
+// let entryDoc = new Entries(newEntry);
+// entryDoc.save((err) => {
+//   if (err) return handleError(err)
 // });
+
+// Entries.deleteOne({"term": {$eq: 'yolo'} }, (err) => {
+//   if (err) return handleError(err)
+// })
+
+Entries.update(
+  {term: 'gtegte' },
+  {$set:
+    {
+      definition: "tree"
+    }
+  },
+  {
+    upsert: true
+  }
+)
 
 app.get('/love', function(req, res) {
   res.send("Love");
