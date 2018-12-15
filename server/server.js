@@ -17,6 +17,36 @@ app.get('/', function (req, res) {
 
 
 
+let newUser = {
+  userName: "L",
+  password: "kittens88",
+  entries: "yada, yada, yoo",
+  badEntries: 44
+}
+let userDoc = new Users(newUser);
+
+userDoc.save((err) => {
+  if (err) return handleError(err);
+});
+
+// let newEntry = {
+//   term: 'gtegte',
+//   definition: 'yyyyy',
+//   upVotes: 2,
+//   downVotes: 2,
+//   createdBy: 'aiDaMon',
+//   tags: ['v', 'e', 'd']
+// }
+// let entryDoc = new Entries(newEntry);
+// entryDoc.save((err) => {
+//   if (err) return handleError(err)
+// });
+
+// Entries.deleteOne({"term": {$eq: 'yolo'} }, (err) => {
+//   if (err) return handleError(err)
+// })
+
+
 app.listen(8080, () => {
   console.log("listening on 8080")
 })
