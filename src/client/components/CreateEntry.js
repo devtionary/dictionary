@@ -4,29 +4,23 @@ import CreateEntryForm from './CreateEntryForm';
 class CreateEntry extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      entryForm: false
-    }
-    this.createEntry = () => {
-      this.setState({entryForm: true});
-    }
-    this.closeCreateEntry = () => {
-      this.setState({entryForm: false});
-    }
+
+
+
   }
 
   render() {
-    if(this.state.entryForm) {
+    if (this.props.entryForm) {
       return (
         <div>
-          <button>Create Entry</button>
-          <CreateEntryForm closeCreateEntry={this.closeCreateEntry} />
+          <button onClick={this.props.createEntry}>Create Entry</button>
+          <CreateEntryForm term={this.props.term} definition={this.props.definition} handleCreateSubmit={this.props.handleCreateSubmit} handleTermChange={this.props.handleTermChange} handleDefinitionChange={this.props.handleDefinitionChange} entries={this.props.entries} closeCreateEntry={this.closeCreateEntry} />
         </div>
       )
     }
     return (
       <div>
-      <button onClick={this.createEntry}>Create Entry</button>
+        <button onClick={this.props.createEntry}>Create Entry</button>
       </div>
     )
   }
