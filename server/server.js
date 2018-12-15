@@ -1,26 +1,31 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
-const path = require('path');
 const bodyParser = require('body-parser');
-const http = require('http');
-const MongoClient = require('mongodb').MongoClient;
-var ObjectID = require('mongodb').ObjectID;
-const Users = require('./models/user-model.js')
-const Entries = require('./models/entries-model.js')
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+const mongoose = require('mongoose')
+const Users = require("./models");
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect('mongodb://localhost/dictionary');
 mongoose.connection.once('open', () => {
-  console.log('Connected with dictionary db');
+  console.log('Connected with dictionary db!!!!!!!!!!!!!!!!!!');
+});
+
+app.get('/', function (req, res) {
+  res.send("Love");
 });
 
 
-
+<<<<<<< HEAD
 let newUser = {
   userName: "Bryan",
   password: "khbliblb",
+=======
+
+let newUser = {
+  userName: "L",
+  password: "kittens88",
+>>>>>>> a0a1be766e137e0bebe4444c32c695e6f73a85a5
   entries: "yada, yada, yoo",
   badEntries: 44
 }
@@ -47,6 +52,7 @@ userDoc.save((err) => {
 //   if (err) return handleError(err)
 // })
 
+<<<<<<< HEAD
 // Entries.findOneAndUpdate({term: 'callback hell'},
 //                           {$set: {definition: 'tree'}},
 //                           {new: true},
@@ -55,9 +61,11 @@ userDoc.save((err) => {
 //                               return handleError(err);
 //                             }
 // });
+=======
+>>>>>>> a0a1be766e137e0bebe4444c32c695e6f73a85a5
 
-app.get('/love', function(req, res) {
-  res.send("Love");
-});
+app.listen(8080, () => {
+  console.log("listening on 8080")
+})
 
 module.exports = app;

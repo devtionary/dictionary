@@ -17,7 +17,7 @@ class NavFields extends Component {
   render() {
     if (this.props.signedIn) {
       return (
-        <button id="logoutButton">Logout</button>
+        <button onClick={this.props.logout} id="logoutButton">Logout</button>
       )
     }
     return (
@@ -40,7 +40,7 @@ class NavFields extends Component {
             placeholder="Password..." 
           />
             <button id="loginButton">Login</button>
-            <a href="#" >Sign Up</a>
+            <a onClick={this.props.triggerSignUp} href="#" >Sign Up</a>
           </nav>
       </nav>
     )
