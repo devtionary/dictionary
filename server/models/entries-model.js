@@ -13,4 +13,4 @@ const entriesSchema = new Schema ({
 
 const Entries = mongoose.model('entries', entriesSchema);
 
-module.exports = (Entries);
+module.exports = Entries;
