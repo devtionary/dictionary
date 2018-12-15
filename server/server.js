@@ -11,6 +11,7 @@ mongoose.connection.once('open', () => {
   console.log('Connected with dictionary db!!!!!!!!!!!!!!!!!!');
 });
 
+
 app.post('/addentry', (req, res) => {
   res.send(req.body)
 })
@@ -18,6 +19,8 @@ app.post('/signin', (req, res) => {
 
   res.send({ 'isUser': true })
 })
+
+
 
 app.listen(8080, () => {
   console.log("listening on 8080")
