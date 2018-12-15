@@ -9,7 +9,16 @@ class CreateEntryForm extends Component {
     };
     this.handleSubmit = (event) => {
       event.preventDefault();
-      console.log(this.state);
+      fetch('http://localhost:8080', {
+        method: 'POST',
+        body: JSON.stringify({
+          term: this.state.term,
+          definition: this.state.definition
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
       this.setState({
         term: '',
         definition: ''
@@ -17,10 +26,10 @@ class CreateEntryForm extends Component {
       this.props.closeCreateEntry();
     }
     this.handleTermChange = (event) => {
-      this.setState({term: event.target.value});
+      this.setState({ term: event.target.value });
     };
     this.handleDefinitionChange = (event) => {
-      this.setState({definition: event.target.value});
+      this.setState({ definition: event.target.value });
     }
   }
 

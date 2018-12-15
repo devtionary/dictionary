@@ -79,8 +79,8 @@ class PageContent extends Component {
 
     })
   }
-  componentDidUpdate() {
-    //console.log("did update", this.state.entries)
+  componentDidMount() {
+    fetch()
   }
   // componentWillMount() {
   //   fetch("/http://localhost:8080/search")
