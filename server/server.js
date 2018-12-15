@@ -18,17 +18,17 @@ mongoose.connection.once('open', () => {
 
 
 
-// let newUser = {
-//   userName: "Leury",
-//   password: "kittens88",
-//   entries: "yada, yada, yoo",
-//   badEntries: 44
-// }
-// let userDoc = new Users(newUser);
-//
-// userDoc.save((err) => {
-//   if (err) return handleError(err);
-// });
+let newUser = {
+  userName: "Bryan",
+  password: "khbliblb",
+  entries: "yada, yada, yoo",
+  badEntries: 44
+}
+let userDoc = new Users(newUser);
+
+userDoc.save((err) => {
+  if (err) return handleError(err);
+});
 
 // let newEntry = {
 //   term: 'gtegte',
@@ -47,17 +47,14 @@ mongoose.connection.once('open', () => {
 //   if (err) return handleError(err)
 // })
 
-Entries.update(
-  {term: 'gtegte' },
-  {$set:
-    {
-      definition: "tree"
-    }
-  },
-  {
-    upsert: true
-  }
-)
+// Entries.findOneAndUpdate({term: 'callback hell'},
+//                           {$set: {definition: 'tree'}},
+//                           {new: true},
+//                           (err, doc) => {
+//                             if (err) {
+//                               return handleError(err);
+//                             }
+// });
 
 app.get('/love', function(req, res) {
   res.send("Love");

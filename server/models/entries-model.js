@@ -13,4 +13,13 @@ const entriesSchema = new Schema ({
 
 const Entries = mongoose.model('entries', entriesSchema);
 
+const userSchema = new Schema ({
+  userName: String,
+  password: String,
+  entries: String,
+  badEntries: Number
+})
+
+const Users = mongoose.model('users', userSchema);
+
 module.exports = Entries;
