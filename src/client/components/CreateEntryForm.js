@@ -7,43 +7,20 @@ class CreateEntryForm extends Component {
       term: '',
       definition: '',
     };
-    this.handleSubmit = (event) => {
-      event.preventDefault();
-      fetch('http://localhost:8080', {
-        method: 'POST',
-        body: JSON.stringify({
-          term: this.state.term,
-          definition: this.state.definition
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      this.setState({
-        term: '',
-        definition: ''
-      });
-      this.props.closeCreateEntry();
-    }
-    this.handleTermChange = (event) => {
-      this.setState({ term: event.target.value });
-    };
-    this.handleDefinitionChange = (event) => {
-      this.setState({ definition: event.target.value });
-    }
+
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.props.handleCreateSubmit}>
         <button onClick={this.props.closeCreateEntry} type="button">X</button>
         <label>
           Entry term:
-          <input type="text" value={this.state.term} onChange={this.handleTermChange} />
+          <input type="text" value={this.props.term} onChange={this.props.handleTermChange} />
         </label>
         <label>
           Definition:
-          <textarea name="definition" rows="10" cols="50" valugit e={this.state.definition} onChange={this.handleDefinitionChange}></textarea>
+          <textarea name="definition" rows="5" cols="50" valugit e={this.props.definition} onChange={this.props.handleDefinitionChange}></textarea>
         </label>
         <input type="submit" value="Submit" />
       </form>

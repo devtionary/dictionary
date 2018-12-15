@@ -8,6 +8,9 @@ class PageContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      term: '',
+      definition: '',
+      entryForm: false,
       searchValue: '',
       entries: [{
         term: 'Hola Dude',
@@ -51,15 +54,19 @@ class PageContent extends Component {
     this.handleAllEntries = (event) => {
       this.setState({ entriesToRender: this.state.entries })
     }
+    this.handleTermChange = (event) => {
+      this.setState({ term: event.target.value });
+    };
+    this.handleDefinitionChange = (event) => {
+      this.setState({ definition: event.target.value });
+    }
 
     this.handleUpvote = ((event) => {
       let entriesCopy = JSON.parse(JSON.stringify(this.state.entries))
       let index = entriesCopy.findIndex((entry) => {
         return entry.id == parseInt(event.target.id)
       })
-
       entriesCopy[index].upvotes = entriesCopy[index].upvotes + 1;
-
       this.setState({
         entries: entriesCopy,
         entriesToRender: entriesCopy
@@ -76,22 +83,52 @@ class PageContent extends Component {
         entries: entriesCopy,
         entriesToRender: entriesCopy
       })
-
     })
+
+    this.handleCreateSubmit = (event) => {
+      event.preventDefault();
+      fetch("http://localhost:8080/addentry", {
+        method: "POST",
+        body: JSON.stringify({
+          term: this.state.term,
+          definition: this.state.definition,
+          createdBy: '',
+          upvotes: 0,
+          downvotes: 0,
+          tags: [],
+          id: this.state.entries.length + 1
+        }),
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then(res => res.json())
+        .then(res => {
+          let arr = JSON.parse(JSON.stringify(this.state.entries))
+          let renderArr = JSON.parse(JSON.stringify(this.state.entriesToRender))
+          arr.push(res)
+          this.setState({
+            entries: arr,
+            term: '',
+            definition: '',
+            entryForm: false
+          })
+        })
+        .catch(err => console.log("Posting new entry Error: ", err))
+
+    }
+
+    this.createEntry = () => {
+      this.setState({ entryForm: true });
+    }
+
+    this.handleTermChange = (event) => {
+      this.setState({ term: event.target.value });
+    };
+    this.handleDefinitionChange = (event) => {
+      this.setState({ definition: event.target.value });
+    }
   }
-  componentDidMount() {
-    fetch()
-  }
-  // componentWillMount() {
-  //   fetch("/http://localhost:8080/search")
-  //     .then((res) => {
-  //       return res.json()
-  //     })
-  //     .then((data) => {
-  //       this.setState({ entries: data })
-  //     })
-  //     .catch(err => console.log("err in fetching entries: ", err))
-  // }
+
 
   render() {
     if (this.props.signUp) {
@@ -116,8 +153,8 @@ class PageContent extends Component {
             handleSearchChange={this.handleSearchChange}
             handleAllEntries={this.handleAllEntries}
           />
-          <CreateEntry />
-          <EntryList entriesToRender={this.state.entriesToRender} handleUpvote={this.handleUpvote} handleDownvote={this.handleDownvote} />
+          <CreateEntry term={this.state.term} definition={this.state.definition} createEntry={this.createEntry} entryForm={this.state.entryForm} handleCreateSubmit={this.handleCreateSubmit} handleTermChange={this.handleTermChange} handleDefinitionChange={this.handleDefinitionChange} entryForm={this.state.entryForm} entries={this.state.entries} />
+          <EntryList signedIn={this.props.signedIn} entriesToRender={this.state.entriesToRender} handleUpvote={this.handleUpvote} handleDownvote={this.handleDownvote} />
         </section>
       )
     }

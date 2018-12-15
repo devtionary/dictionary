@@ -4,23 +4,13 @@ import EntryItem from './EntryItem';
 class EntryList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      posts: [
-        {
-          term: 'Loren Ipsom',
-          definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          createdBy: 'Briandaman',
-          upvotes: 3,
-          downvotes: 0,
-
-        }
-      ]
-    }
+    this.state = {}
   }
 
   render() {
     let entries = this.props.entriesToRender.map((entry, index) => {
       return <EntryItem
+        signedIn={this.props.signedIn}
         key={`entry-item-${index}`}
         term={entry.term}
         definition={entry.definition}
