@@ -16,10 +16,16 @@ app.get('/', function (req, res) {
 });
 
 
+<<<<<<< HEAD
+let newUser = {
+  userName: "Bryan",
+  password: "khbliblb",
+=======
 
 let newUser = {
   userName: "L",
   password: "kittens88",
+>>>>>>> a0a1be766e137e0bebe4444c32c695e6f73a85a5
   entries: "yada, yada, yoo",
   badEntries: 44
 }
@@ -46,6 +52,17 @@ userDoc.save((err) => {
 //   if (err) return handleError(err)
 // })
 
+<<<<<<< HEAD
+// Entries.findOneAndUpdate({term: 'callback hell'},
+//                           {$set: {definition: 'tree'}},
+//                           {new: true},
+//                           (err, doc) => {
+//                             if (err) {
+//                               return handleError(err);
+//                             }
+// });
+=======
+>>>>>>> a0a1be766e137e0bebe4444c32c695e6f73a85a5
 
 app.listen(8080, () => {
   console.log("listening on 8080")
