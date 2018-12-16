@@ -20,7 +20,7 @@ class CreateEntryForm extends Component {
         </label>
         <label>
           Definition:
-          <textarea name="definition" rows="5" cols="50" valugit e={this.props.definition} onChange={this.props.handleDefinitionChange}></textarea>
+          <textarea name="definition" rows="1" cols="50" valugit e={this.props.definition} onChange={this.props.handleDefinitionChange}></textarea>
         </label>
         <input type="submit" value="Submit" />
       </form>

@@ -13,8 +13,8 @@ class PageContent extends Component {
       entryForm: false,
       searchValue: '',
       entries: [{
-        term: 'Hola Dude',
-        definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        term: 'Bugfoot',
+        definition: 'A bug that isn’t reproducible and has been sighted by only one person.',
         createdBy: 'Briandaman',
         upvotes: 0,
         downvotes: 0,
@@ -22,19 +22,51 @@ class PageContent extends Component {
       },
       {
         term: 'Spin it Up',
-        definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        createdBy: 'Briandaman',
+        definition: 'Originally most servers were storage servers with multiple hard disks attached. So when a server was started the OS had to boot as well as the HDD all come up to speed before the server was useful. So the term spin up the server refers to the start time, primarily to spin the hard drives to operating speed so it can boot and they are ready to respond.',
+        createdBy: 'Leury',
         upvotes: 3,
         downvotes: 0,
         id: 2
       },
       {
         term: 'Backpack',
-        definition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        createdBy: 'Briandaman',
+        definition: 'A Javascript closure.',
+        createdBy: 'Will S.',
         upvotes: 4,
         downvotes: 0,
         id: 3
+      },
+      {
+        term: 'Pokémon Exception Handling',
+        definition: 'For when you just Gotta Catch \'Em All.',
+        createdBy: 'Ash',
+        upvotes: 0,
+        downvotes: 0,
+        id: 4
+      },
+      {
+        term: 'A Duck',
+        definition: 'A feature added for no other reason than to draw management attention and be removed, thus avoiding unnecessary changes in other aspects of the product.',
+        createdBy: 'Donald',
+        upvotes: 0,
+        downvotes: 0,
+        id: 5
+      },
+      {
+        term: 'Rubber Ducking',
+        definition: 'Sometimes, you just have to talk a problem out.',
+        createdBy: 'Rafa',
+        upvotes: 0,
+        downvotes: 0,
+        id: 6
+      },
+      {
+        term: 'Rage Cage',
+        definition: 'It\'s not just a game for some of us..',
+        createdBy: 'Bry',
+        upvotes: 0,
+        downvotes: 0,
+        id: 6
       }],
       entriesToRender: []
     }
@@ -92,7 +124,7 @@ class PageContent extends Component {
         body: JSON.stringify({
           term: this.state.term,
           definition: this.state.definition,
-          createdBy: '',
+          createdBy: this.props.user,
           upvotes: 0,
           downvotes: 0,
           tags: [],
@@ -108,6 +140,7 @@ class PageContent extends Component {
           arr.push(res)
           this.setState({
             entries: arr,
+            entriesToRender: renderArr,
             term: '',
             definition: '',
             entryForm: false
@@ -153,7 +186,7 @@ class PageContent extends Component {
             handleSearchChange={this.handleSearchChange}
             handleAllEntries={this.handleAllEntries}
           />
-          <CreateEntry term={this.state.term} definition={this.state.definition} createEntry={this.createEntry} entryForm={this.state.entryForm} handleCreateSubmit={this.handleCreateSubmit} handleTermChange={this.handleTermChange} handleDefinitionChange={this.handleDefinitionChange} entryForm={this.state.entryForm} entries={this.state.entries} />
+          <CreateEntry user={this.state.user} term={this.state.term} definition={this.state.definition} createEntry={this.createEntry} entryForm={this.state.entryForm} handleCreateSubmit={this.handleCreateSubmit} handleTermChange={this.handleTermChange} handleDefinitionChange={this.handleDefinitionChange} entryForm={this.state.entryForm} entries={this.state.entries} />
           <EntryList signedIn={this.props.signedIn} entriesToRender={this.state.entriesToRender} handleUpvote={this.handleUpvote} handleDownvote={this.handleDownvote} />
         </section>
       )

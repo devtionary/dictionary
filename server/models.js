@@ -10,7 +10,7 @@ const entriesSchema = new Schema({
   tags: [String]
 })
 const userSchema = new Schema({
-  userName: String,
+  username: String,
   password: String,
   entries: String,
   badEntries: Number
@@ -19,7 +19,7 @@ const userSchema = new Schema({
 const Users = mongoose.model('Users', userSchema);
 const Entries = mongoose.model('Entries', entriesSchema);
 let newUser = {
-  userName: "Eugene",
+  username: "Eugene",
   password: "kittens88",
   entries: "yada, yada, yoo",
   badEntries: 44
