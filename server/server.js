@@ -19,7 +19,9 @@ app.post('/signin', (req, res) => {
 
   res.send({ 'isUser': true })
 })
-
+app.post('/signup', (req, res) => {
+  res.send({ 'createdUser': true })
+})
 
 
 app.listen(8080, () => {

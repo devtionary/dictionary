@@ -4,6 +4,10 @@ const path = require('path');
 const controller = {};
 // const entryController = {};
 
+controller.isUser = (req, res, next) => {
+  //some logic to determine if isUser: true
+}
+
 
 controller.addUser = (req, res, next) => {
   // let userDoc = new Users(newUser);
@@ -14,18 +18,18 @@ controller.addUser = (req, res, next) => {
 }
 
 controller.deleteUser = (req, res, next) => {
-  Users.deleteOne({key: {$eq: "value"} }, (err) => {
+  Users.deleteOne({ key: { $eq: "value" } }, (err) => {
     if (err) return handleError(err)
   })
 }
 
 controller.updateUser = (req, res, next) => {
-  Users.findOneAndUpdate({userName: 'userName'}, {$set: {entries: "update value"}}, {new: true},
-  (err, doc) => {
-    if (err) {
-      return handleError(err);
-    }
-  })
+  Users.findOneAndUpdate({ userName: 'userName' }, { $set: { entries: "update value" } }, { new: true },
+    (err, doc) => {
+      if (err) {
+        return handleError(err);
+      }
+    })
 }
 
 
@@ -39,18 +43,18 @@ controller.addEntry = (req, res, next) => {
 }
 
 controller.deleteEntry = (req, res, next) => {
-  Entries.deleteOne({"term": {$eq: 'term name'} }, (err) => {
+  Entries.deleteOne({ "term": { $eq: 'term name' } }, (err) => {
     if (err) return handleError(err)
   });
 };
 
 controller.updpateEntry = (req, res, next) => {
-  Entries.findOneAndUpdate({term: 'callback hell'}, {$set: {definition: 'new definition'}}, {new: true},
-  (err, doc) => {
-    if (err) {
-      return handleError(err);
-    }
-  })
+  Entries.findOneAndUpdate({ term: 'callback hell' }, { $set: { definition: 'new definition' } }, { new: true },
+    (err, doc) => {
+      if (err) {
+        return handleError(err);
+      }
+    })
 };
 
 

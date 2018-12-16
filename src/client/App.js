@@ -37,7 +37,8 @@ class App extends Component {
 
           if (res.isUser === true) {
             this.setState({
-              signedIn: true
+              signedIn: true,
+              user: this.state.user
             })
           }
         })
