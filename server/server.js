@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
-const Users = require("./models");
+const controller = require("./controller");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,12 +15,12 @@ mongoose.connection.once('open', () => {
 app.post('/addentry', (req, res) => {
   res.send(req.body)
 })
-app.post('/signin', (req, res) => {
-
-  res.send({ 'isUser': true })
+app.post('/signin', controller.isUser, (req, res, err) => {
+  console.log(err)
 })
-app.post('/signup', (req, res) => {
-  res.send({ 'createdUser': true })
+
+app.post('/signup', controller.addUser, (req, res, err) => {
+  console.log(err)
 })
 
 
