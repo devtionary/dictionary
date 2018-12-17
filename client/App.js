@@ -69,23 +69,23 @@ class App extends Component {
   render() {
     return (
       <main>
-        <NavFields 
-          triggerSignIn={this.triggerSignIn} 
-          signedIn={this.state.signedIn} 
-          triggerSignUp={this.triggerSignUp} 
-          logout={this.logout} 
+        <NavFields
+          triggerSignIn={this.triggerSignIn}
+          signedIn={this.state.signedIn}
+          triggerSignUp={this.triggerSignUp}
+          logout={this.logout}
           usernameValue={this.state.usernameValue}
           handleUsernameChange={this.handleUsernameChange}
           passwordValue={this.state.passswordValue}
           handlePasswordChange={this.handlePasswordChange}
         />
-        {this.state.notice && 
+        {this.state.notice &&
           <NoticeMessage noticeMessage={this.state.noticeMessage} />
         }
-        <PageContent 
-          closeSignUpModal={this.closeSignUpModal} 
-          signUp={this.state.signUp} 
-          signedIn={this.state.signedIn} 
+        <PageContent
+          closeSignUpModal={this.closeSignUpModal}
+          signUp={this.state.signUp}
+          signedIn={this.state.signedIn}
           user={this.state.user}
         />
       </main>
