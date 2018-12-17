@@ -1,5 +1,5 @@
-const Users = require("./models.js");
-const Entries = require("./models.js");
+const Users = require("./userModel.js");
+const Entries = require("./entryModel.js");
 const path = require('path');
 const controller = {};
 
@@ -8,8 +8,8 @@ controller.addEntry = (req, res) => {
   new Entries({
     term: `${req.body.term}`,
     definition: `${req.body.definition}`,
-    upVotes: req.body.upVotes,
-    downVotes: req.body.downVotes,
+    upvotes: req.body.upvotes,
+    downvotes: req.body.downvotes,
     createdBy: `${req.body.createdBy}`,
     tags: []
   }).save(err => {
@@ -21,8 +21,8 @@ controller.addEntry = (req, res) => {
 }
 
 controller.getEntries = (req, res) => {
-  Users.find({}, (err, entries) => {
-    res.send(entries)
+  Entries.find({}, (err, entries) => {
+    res.send(entries);
   })
 }
 
@@ -30,8 +30,9 @@ controller.getEntries = (req, res) => {
 
 controller.isUser = (req, res) => {
   //some logic to determine if isUser: true
-  Users.findOne({ username: `${req.body.username}` }, "username password", (err, user) => {
-    if (user === null || user.password !== req.body.password) {
+  Users.findOne({ username: `${req.body.username}`, password: `${req.body.password}` }, "username", (err, user) => {
+    if (user === null) {
+      console.log(user);
       res.send({ isUser: false })
     } else {
       res.send({ isUser: true, user: user.username })
@@ -41,7 +42,7 @@ controller.isUser = (req, res) => {
 
 
 controller.addUser = (req, res) => {
-  Users.findOne({ username: `${req.body.username}`, password: `${req.body.password}` }, "username", (err, user) => {
+  Users.findOne({ username: `${req.body.username}` }, "username", (err, user) => {
     if (user === null) {
       new Users({
         username: `${req.body.username}`,
@@ -56,10 +57,9 @@ controller.addUser = (req, res) => {
       res.send({ userAlready: true })
     }
   })
-
 }
 
 
 
 
-module.exports = controller
+module.exports = controller;

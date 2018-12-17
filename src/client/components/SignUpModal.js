@@ -5,7 +5,9 @@ class SignUpModal extends Component {
     super(props);
     this.state = {
       usernameValue: '',
-      passwordValue: ''
+      passwordValue: '',
+      notice: false,
+      noticeMessage: ''
     };
     this.handleUsernameChange = (event) => {
       this.setState({ usernameValue: event.target.value });
@@ -26,9 +28,20 @@ class SignUpModal extends Component {
         }
       })
         .then((res) => res.json())
-        .then(() => {
-          this.props.closeSignUpModal()
-          console.log('success!')
+        .then((res) => {
+          if(res.userAlready === true) {
+            this.state({
+              notice: true,
+              noticeMessage: 'User already exists. Try a different username.'
+            });
+          } else{
+            this.setState({
+              notice: false,
+              noticeMessage: ''
+            });
+            this.props.closeSignUpModal()
+            console.log('success!')
+          }
         })
         .catch(err => console.log("error with signUP: ", err))
     }
@@ -53,7 +66,10 @@ class SignUpModal extends Component {
           name="password"
           placeholder="Enter password..."
         />
-        <button onClick={this.handleSignup} id="loginButton">Sign Up</button>
+        <button onClick={this.handleSignup} id="signUpButton">Sign Up</button>
+        {this.state.notice && 
+          <NoticeMessage noticeMessage={this.state.noticeMessage} />
+        }
       </section>
     )
   }
