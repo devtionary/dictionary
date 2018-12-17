@@ -11,17 +11,10 @@ mongoose.connection.once('open', () => {
   console.log('Connected with dictionary db!!!!!!!!!!!!!!!!!!');
 });
 
-
-app.post('/addentry', (req, res) => {
-  res.send(req.body)
-})
-app.post('/signin', controller.isUser, (req, res, err) => {
-  console.log(err)
-})
-
-app.post('/signup', controller.addUser, (req, res, err) => {
-  console.log(err)
-})
+app.get('/', controller.getEntries)
+app.post('/addentry', controller.addEntry)
+app.post('/signin', controller.isUser)
+app.post('/signup', controller.addUser)
 
 
 app.listen(8080, () => {
