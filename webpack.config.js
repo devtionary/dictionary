@@ -1,18 +1,17 @@
 const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CleanWebPackPlugin = require('clean-webpack-plugin');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebPackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './client/index.js',
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
-    publicPath: '/dist'
+    filename: 'bundle.js'
   },
   devServer: {
     compress: true,
+    publicPath: '/dist',
     port: 3000
   },
   module: {
@@ -20,9 +19,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: [/node_modules/],
-        use: {
-          loader: 'babel-loader'
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
@@ -31,4 +28,4 @@ module.exports = {
       }
     ]
   }
-}
+};
