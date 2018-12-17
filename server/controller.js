@@ -1,5 +1,5 @@
-const Users = require("./userModel.js");
-const Entries = require("./entryModel.js");
+const Users = require("../models/userModel.js");
+const Entries = require("../models/entryModel.js");
 const path = require('path');
 const controller = {};
 
