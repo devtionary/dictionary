@@ -11,14 +11,14 @@ class CreateEntry extends Component {
       return (
         <div>
           <button onClick={this.props.createEntry}>Create Entry</button>
-          <CreateEntryForm 
-            term={this.props.term} 
-            definition={this.props.definition} 
-            handleCreateSubmit={this.props.handleCreateSubmit} 
-            handleTermChange={this.props.handleTermChange} 
-            handleDefinitionChange={this.props.handleDefinitionChange} 
-            entries={this.props.entries} 
-            closeCreateEntry={this.props.closeCreateEntry} 
+          <CreateEntryForm
+            term={this.props.term}
+            definition={this.props.definition}
+            handleCreateSubmit={this.props.handleCreateSubmit}
+            handleTermChange={this.props.handleTermChange}
+            handleDefinitionChange={this.props.handleDefinitionChange}
+            entries={this.props.entries}
+            closeCreateEntry={this.props.closeCreateEntry}
           />
         </div>
       )
