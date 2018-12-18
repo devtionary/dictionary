@@ -11,3 +11,5 @@ const Root = () => (
 );
 
 render(<Root />, document.querySelector('#contents'));
+
+export default Root;
