@@ -32,6 +32,15 @@ module.exports = {
           presets: ['babel-preset-env', 'babel-preset-react'],
         },
       },
+      {
+        test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 25000,
+          },
+        },
+      },
     ],
   },
   devServer: {

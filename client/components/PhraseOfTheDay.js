@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { rem } from 'polished';
 
 const ArticleStyled = styled.article`
+  position: relative;
   margin-bottom: ${rem('30px')};
   padding: ${rem('20px')};
   background-color: #eaf4ff;
@@ -42,7 +43,10 @@ const TermStyled = styled.h3`
   color: #495460;
   
   &::before {
-    content: '"';
+    content: '“';
+    position: absolute;
+    left: ${rem('-30px')};
+    top: ${rem('-10px')};
     font-family: "HK Grotesk";
     font-size: ${rem('48px')};
     font-weight: bold;
@@ -53,12 +57,31 @@ const TermStyled = styled.h3`
 `;
 
 const Descriptiontyled = styled.p`
-  font-family: 'Cutive Mono';
-  color: #121418;
+  margin-bottom: ${rem('30px')};
+  margin-top: ${rem('30px')};
+  max-width: ${rem('337px')};
+  font-family: 'Cutive Mono', sans-serif;
   font-size: ${rem('14px')};
   letter-spacing: ${rem('0.37px')};
   line-height: 1.4;
-  max-width: ${rem('337px')};
+  color: #121418;
+`;
+
+const ReadMoreStyled = styled(Link)`
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-family: 'HK Grotesk', sans-serif;
+  text-decoration: none;
+  font-size: ${rem('18px')};
+  font-weight: bold;
+  letter-spacing: ${rem('0.48px')};
+  line-height: 1.5;
+  color: #495460;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 function PhraseOfTheDay({ phrase }) {
@@ -70,7 +93,7 @@ function PhraseOfTheDay({ phrase }) {
       <Descriptiontyled>{phrase.description}</Descriptiontyled>
       <div>
         <Thumbs thumbsUp={phrase.thumbsUp} thumbsDown={phrase.thumbsDown} />
-        <Link to={phrase.termURL}>Read more</Link>
+        <ReadMoreStyled to={phrase.termURL}>Read more</ReadMoreStyled>
       </div>
     </ArticleStyled>
   );

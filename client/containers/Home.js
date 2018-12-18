@@ -13,7 +13,7 @@ import { rem } from 'polished';
 const ContentContainerStyled = styled.div`
   padding-top: ${rem('100px')};
   display: grid;
-  grid-template-columns: 1.5fr 4fr 0.33fr 2fr;
+  grid-template-columns: 1.5fr ${rem(528)} 0.6fr 2fr;
 `;
 
 const PhrasesContainerStyled = styled.div`
@@ -22,6 +22,18 @@ const PhrasesContainerStyled = styled.div`
 
 const RecentPhrasesContainerStyled = styled.aside`
   grid-column: 4;
+`;
+
+const RecentPhrasesHeaderStyled = styled.aside`
+  max-width: ${rem('197px')};
+  margin-top: ${rem('70px')};
+  margin-bottom: ${rem('32px')};
+  color: #495460;
+  font-family: 'HK Grotesk', sans-serif;
+  font-size: ${rem('24px')};
+  font-weight: bold;
+  letter-spacing: ${rem('0.64px')};
+  line-height: 1.3;
 `;
 
 class Home extends Component {
@@ -76,6 +88,19 @@ class Home extends Component {
           thumbsUp: 10,
           thumbsDown: 2,
         },
+        {
+          id: 1,
+          term: 'Console.log it',
+          description:
+            "The mean of logging every single line of code until you've debugged an issue or thrown in the towel due to exasperation.",
+          user: {
+            avatarUrl: '',
+            name: 'genethebene',
+            userUrl: '/',
+          },
+          thumbsUp: 10,
+          thumbsDown: 2,
+        },
       ],
     };
   }
@@ -90,11 +115,17 @@ class Home extends Component {
             ))}
           </PhrasesContainerStyled>
           <RecentPhrasesContainerStyled>
-            <h2>Recently created phrases</h2>
+            <RecentPhrasesHeaderStyled>
+              Recently created phrases
+            </RecentPhrasesHeaderStyled>
             {this.state.recentPhrases.map((definition, idx) => {
               if (idx < 2) {
                 return (
-                  <Definition key={idx}>
+                  <Definition
+                    key={idx}
+                    margins={{
+                      top: `90px`,
+                    }}>
                     <DefinitionTerm>{definition.term}</DefinitionTerm>
                     <DefinitionDescription>
                       {definition.description}
