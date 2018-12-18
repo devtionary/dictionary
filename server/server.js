@@ -2,13 +2,11 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const userController = require("./controllers/userController");
-const definitionController = require("./controllers/definitionController");
+const defController = require("./controllers/definitionController");
 
-// 
+
 const Sequelize = require('sequelize');
-// const sequelize = new Sequelize('postgres://ktzvzasy:HFcXuVJJN5V7H2Iy9FUFbwwKRZBbk_o-@baasu.db.elephantsql.com:5432/ktzvzasy',{
-//   dialect: 'postgres'
-// });
+
 const sequelize = new Sequelize('dictionary', 'student', 'ilovetesting', {
   host: 'localhost',
   dialect: 'postgres',
@@ -43,8 +41,11 @@ app.get('/', (req,res) => {
 
 app.post('/api/auth', userController.isUser);
 
-app.post('/api/addDefinition',definitionController.checkIfDefExists,definitionController.addDef)
+app.post('/api/addDefinition',defController.getDef,defController.addDef)
 
+app.get('/api/definition',defController.getDef,(req,res) => {
+  res.send(null);
+});
 
 app.listen(8080, () => {
   console.log("listening on 8080")
