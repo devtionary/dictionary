@@ -8,6 +8,9 @@ import { rem } from 'polished';
 
 const TopNavWrapperStyled = styled.section`
   position: fixed;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
   max-width: ${rem('1250px')};
   width: 100%;
   display: flex;
@@ -45,7 +48,9 @@ class TopNav extends Component {
   //       }
   //     })
 
-  logout() {}
+  logout() {
+    this.setState({ signedIn: false });
+  }
   triggerSignIn() {
     //   fetch('/api/users', {
     //     method: 'POST',

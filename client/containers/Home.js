@@ -83,7 +83,6 @@ class Home extends Component {
   render() {
     return (
       <main className={this.props.className}>
-        <TopNav />
         <ContentContainerStyled>
           <PhrasesContainerStyled>
             {this.state.phrases.map((phrase, idx) => (
