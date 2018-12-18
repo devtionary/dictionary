@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import DevtionaryLogo from './svg/dev_logo';
 import SearchIcon from './svg/search_icon';
-import SignInModal from "./SignInModal";
+import SignInModal from './SignInModal';
+import Button from './Button';
+import styled from 'styled-components';
+import { rem } from 'polished';
+
+const TopNavWrapperStyled = styled.section`
+  position: fixed;
+  max-width: ${rem('1250px')};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: ${rem('22px')};
+  background-color: #ffffff;
+`;
+
+const NavActionsStyled = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 class TopNav extends Component {
   constructor(props) {
@@ -37,30 +56,33 @@ class TopNav extends Component {
     //     });
     // };
     this.setState({ signedIn: true });
-  };
+  }
 
   render() {
     return (
-      <section>
+      <TopNavWrapperStyled className={this.props.className}>
         <DevtionaryLogo />
-        <button>Sign up</button>
-        <button>Log in</button>
-        <SignInModal
-          signedIn={this.state.signedIn}
-          triggerSignIn={this.triggerSignIn.bind(this)}
-          logout={this.logout.bind(this)}
-        />
-        <SearchIcon />
-        {/*{this.state.notice &&*/}
-        {/*<NoticeMessage noticeMessage={this.state.noticeMessage} />*/}
-        {/*}*/}
-        {/*<PageContent*/}
-        {/*closeSignUpModal={this.closeSignUpModal}*/}
-        {/*signUp={this.state.signUp}*/}
-        {/*signedIn={this.state.signedIn}*/}
-        {/*user={this.state.user}*/}
-        {/*/>*/}
-      </section>
+        <NavActionsStyled>
+          <Button>Sign up</Button>
+          <Button isText>Log in</Button>
+          <SearchIcon />
+          <SignInModal
+            signedIn={this.state.signedIn}
+            triggerSignIn={this.triggerSignIn.bind(this)}
+            logout={this.logout.bind(this)}
+          />
+          <SearchIcon />
+          {/*{this.state.notice &&*/}
+          {/*<NoticeMessage noticeMessage={this.state.noticeMessage} />*/}
+          {/*}*/}
+          {/*<PageContent*/}
+          {/*closeSignUpModal={this.closeSignUpModal}*/}
+          {/*signUp={this.state.signUp}*/}
+          {/*signedIn={this.state.signedIn}*/}
+          {/*user={this.state.user}*/}
+          {/*/>*/}
+        </NavActionsStyled>
+      </TopNavWrapperStyled>
     );
   }
 }
