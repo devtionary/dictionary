@@ -8,10 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      accessToken:{
+        type: Sequelize.STRING
+      },
       username: {
         type: Sequelize.STRING
       },
-      password: {
+      email: {
         type: Sequelize.STRING
       },
       avatar: {

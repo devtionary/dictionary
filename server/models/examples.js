@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Examples = sequelize.define('Examples', {
-    uId: DataTypes.NUMBER,
+    uId: DataTypes.INTEGER,
     text: DataTypes.STRING,
-    dId: DataTypes.NUMBER
+    dId: DataTypes.INTEGER
   }, {});
   Examples.associate = function(models) {
     // associations can be defined here
