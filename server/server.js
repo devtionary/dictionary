@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const userController = require("./controllers/userController");
+const definitionController = require("./controllers/definitionController");
 
 // 
 const Sequelize = require('sequelize');
@@ -41,8 +42,6 @@ app.get('/', (req,res) => {
 })
 // app.post('/addentry', controller.addEntry)
 app.post('/api/auth', userController.isUser)
-// app.post('/api/addUser', userController.addUser)
-// app.post('/api/signup', controller.addUser)
 
 
 app.listen(8080, () => {
