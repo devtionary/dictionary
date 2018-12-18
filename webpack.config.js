@@ -8,37 +8,33 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'client/public/', 'index.html'),
-      filename: './index.html'
+      filename: './index.html',
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   module: {
     rules: [
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: ['url-loader?limit=100000'],
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: [/node_modules/],
         loader: 'babel-loader',
         options: {
-          presets: [
-            require.resolve('babel-preset-env'),
-            require.resolve('babel-preset-react')
-          ]
-        }
+          presets: ['babel-preset-env', 'babel-preset-react'],
+        },
       },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
+    ],
   },
   devServer: {
-    hot: true
-  }
+    hot: true,
+  },
 };

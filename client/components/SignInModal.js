@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import GoogleLogin from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 import keys from '../config/keys';
 
 class SignInModal extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   onSuccessHandler(response) {
     console.log('Logged In as', response);
     this.props.triggerSignIn();
