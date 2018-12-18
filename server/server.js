@@ -39,9 +39,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req,res) => {
   res.send('hi')
-})
-// app.post('/addentry', controller.addEntry)
-app.post('/api/auth', userController.isUser)
+});
+
+app.post('/api/auth', userController.isUser);
+
+app.post('/api/addDefinition',definitionController.checkIfDefExists,definitionController.addDef)
 
 
 app.listen(8080, () => {

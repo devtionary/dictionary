@@ -2,35 +2,36 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('definitions',{
-      uId: {
+    return queryInterface.addColumn('definitions','uId',{
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id',
           as: 'uId'
         }
-      },
-      upvotes: {
-        type: Sequelize.INTEGER,
-        references: {
-          model:'upvotes',
-          key: 'count',
-          as:'count'
-        }
-      },
-      downvotes: {
-        type: Sequelize.INTEGER,
-        references: {
-          model:'downvotes',
-          key: 'count',
-          as:'count'
-        }
-      },
+      
+    }).then(() => {
+      console.log('2nd')
+      return queryInterface.addColumn('definitions','upvotes',{
+          type: Sequelize.INTEGER,
+          references: {
+            model:'Upvotes',
+            key: 'count',
+            as:'upvotes'
+          }
+      }).then(() => {
+        return queryInterface.addColumn('definitions','downvotes',{
+            type: Sequelize.INTEGER,
+            references: {
+              model:'Downvotes',
+              key: 'count',
+              as:'downvotes'
+            }
+        })
+      })
     })
   },
-
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('definitions');
+    return queryInterface.removeColumn('definitions');
   }
 };

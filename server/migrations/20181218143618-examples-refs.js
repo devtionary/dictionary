@@ -1,26 +1,26 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Examples', {
-      uId: {
+    return queryInterface.addColumn('Examples', 'uId',{
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id',
           as: 'uId'
         }
-      },
-      dId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'definitions',
-          key: 'id',
-          as: 'dId'
-        }
-      },
-    });
+      
+    }).then(() => {
+      return queryInterface.addColumn('Examples','dId', {
+          type: Sequelize.INTEGER,
+          references: {
+            model: 'definitions',
+            key: 'id',
+            as: 'dId'
+          }
+      })
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Examples');
+    return queryInterface.removeColumn('Examples');
   }
 };

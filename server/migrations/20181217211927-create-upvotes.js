@@ -1,23 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Upvotes', {    
-      uId: {
+    return queryInterface.createTable('Upvotes', {   
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      }, 
+      count: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id',
-          as: 'uId'
-        }
-      },
-      dId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'definitions',
-          key: 'id',
-          as: 'dId'
-        }
-      },
+        unique: true
+      }
     });
   },
   down: (queryInterface, Sequelize) => {

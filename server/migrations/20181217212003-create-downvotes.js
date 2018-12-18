@@ -1,24 +1,18 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Downvotes', {
+    return queryInterface.createTable('Downvotes', { 
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      count: {
+        type: Sequelize.INTEGER,  
+        unique: true
+      }
     
-      uId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id',
-          as: 'uId'
-        }
-      },
-      dId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'definitions',
-          key: 'id',
-          as: 'dId'
-        }
-      },
     });
   },
   down: (queryInterface, Sequelize) => {

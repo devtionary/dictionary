@@ -2,27 +2,26 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Comments',{
-      dId: {
+    return queryInterface.addColumn('Comments','dId',{
         type: Sequelize.INTEGER,
         references: {
           model: 'definitions',
           key: 'id',
           as: 'dId'
         }
-      },
-      uId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id',
-          as: 'uId'
-        }
-      },
+    }).then(() => {
+      return queryInterface.addColumn('Comments','uId',{
+          type: Sequelize.INTEGER,
+          references: {
+            model: 'users',
+            key: 'id',
+            as: 'uId'
+          }
+      })
     })
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Comments');
+    return queryInterface.removeColumn('Comments');
   }
 };
