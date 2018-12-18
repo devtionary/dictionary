@@ -8,7 +8,7 @@ const userController = {};
 
 
   userController.isUser = (req, res) => {
-    console.log(Users)
+
     const accessToken = req.body.accessToken;
     //check if user exists alredy
     Users.findOne({ where: {accessToken: accessToken} }).then(user => {
