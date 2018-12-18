@@ -1,37 +1,57 @@
-const Users = require("../models/userModel.js");
+const models = require("../models");
 const path = require('path');
+const Sequelize = require('sequelize');
+const fetch = require('node-fetch');
+
+const Users = models.users;
 const userController = {};
 
 
-userController.isUser = (req, res) => {
-    //some logic to determine if isUser: true
-    Users.findOne({ username: `${req.body.username}`, password: `${req.body.password}` }, "username", (err, user) => {
-      if (user === null) {
-        console.log(user);
-        res.send({ isUser: false })
-      } else {
-        res.send({ isUser: true, user: user.username })
+  userController.isUser = (req, res) => {
+
+    const accessToken = req.body.accessToken;
+    //check if user exists alredy
+    Users.findOne({ where: {accessToken: accessToken} }).then(user => {
+      if(user === null){
+        userController.addUser(req,res);
+      }else{
+        res.send(JSON.stringify(user))
       }
     })
   }
   
   
   userController.addUser = (req, res) => {
-    Users.findOne({ username: `${req.body.username}` }, "username", (err, user) => {
-      if (user === null) {
-        new Users({
-          username: `${req.body.username}`,
-          password: `${req.body.password}`
-        }).save((err) => {
-          if (err) {
-            console.log(err)
-          }
-        })
-        res.send({ userAlready: false })
-      } else {
-        res.send({ userAlready: true })
-      }
+    const email = req.body.email;
+    const avatar = req.body.imageUrl;
+    const accessToken = req.body.accessToken;
+
+      fetch('https://randomuser.me/api/')
+    .then(function(response) {
+      return response.json();
+    })
+    .then((myJson) => {
+      const username = myJson.results[0].login.username;
+      console.log(username);
+      return username
+    }).then((username) => {
+      Users.create({accessToken: accessToken,
+                   username: username,
+                   email: email, 
+                   avatar: avatar })
+                   .then((user) => {
+                     console.log("USER HAS BEEN CREATED");
+                     res.send(JSON.stringify(user))
+      }).catch((err) => {
+        console.log("ERROR!!!!!",err)
+      })
     })
   }
 
   module.exports = userController;
+
+
+
+
+
+  
