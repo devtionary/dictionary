@@ -11,8 +11,7 @@ class NavFields extends Component {
       )
     }
     return (
-      <nav>
-        <nav>
+      <section>
           <input
             value={this.props.usernameValue}
             onChange={this.props.handleUsernameChange}
@@ -31,8 +30,7 @@ class NavFields extends Component {
           />
           <button onClick={this.props.triggerSignIn} id="loginButton">Login</button>
           <a onClick={this.props.triggerSignUp} href="#" >Sign Up</a>
-        </nav>
-      </nav>
+      </section>
     )
   }
 }
