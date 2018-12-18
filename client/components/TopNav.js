@@ -1,38 +1,33 @@
 import React, { Component } from 'react';
+import DevtionaryLogo from './svg/dev_logo';
+import SearchIcon from './svg/search_icon';
 
-class NavFields extends Component {
+class TopNav extends Component {
   constructor(props) {
     super(props);
   }
+
+  //     fetch("http://localhost:8080/signin", {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         username: this.state.usernameValue,
+  //         password: this.state.passwordValue
+  //       }),
+  //       headers: {
+  //         "Content-type": "application/json"
+  //       }
+  //     })
+
   render() {
-    if (this.props.signedIn) {
-      return (
-        <button onClick={this.props.logout} id="logoutButton">Logout</button>
-      )
-    }
     return (
       <section>
-          <input
-            value={this.props.usernameValue}
-            onChange={this.props.handleUsernameChange}
-            id="usernameInput"
-            type="text"
-            name="username"
-            placeholder="Enter username here..."
-          />
-          <input
-            value={this.props.passwordValue}
-            onChange={this.props.handlePasswordChange}
-            id="passwordInput"
-            type="password"
-            name="password"
-            placeholder="Password..."
-          />
-          <button onClick={this.props.triggerSignIn} id="loginButton">Login</button>
-          <a onClick={this.props.triggerSignUp} href="#" >Sign Up</a>
+        <DevtionaryLogo />
+        <button>Sign up</button>
+        <button>Log in</button>
+        <SearchIcon />
       </section>
-    )
+    );
   }
 }
 
-export default NavFields;
+export default TopNav;

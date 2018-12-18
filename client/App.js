@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavFields from './components/NavFields';
+import TopNav from './components/TopNav';
 import PageContent from './components/PageContent';
 import NoticeMessage from './components/NoticeMessage';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -15,22 +15,6 @@ class App extends Component {
       passwordValue: '',
       notice: false,
       noticeMessage: ''
-    };
-    this.handleUsernameChange = event => {
-      this.setState({ usernameValue: event.target.value });
-    };
-    this.handlePasswordChange = event => {
-      this.setState({ passwordValue: event.target.value });
-    };
-    this.logout = () => {
-      this.setState({ signedIn: false });
-    };
-    this.closeSignUpModal = () => {
-      this.setState({ signUp: false });
-    };
-    this.triggerSignUp = event => {
-      event.preventDefault();
-      this.setState({ signUp: true });
     };
     this.triggerSignIn = () => {
       //   fetch('/api/users', {
@@ -54,15 +38,21 @@ class App extends Component {
   render() {
     return (
       <main>
+        <TopNav />
         <SignInModal
           signedIn={this.state.signedIn}
           triggerSignIn={this.triggerSignIn.bind(this)}
           logout={this.logout.bind(this)}
         />
-        {this.state.notice && (
-          <NoticeMessage noticeMessage={this.state.noticeMessage} />
-        )}
-        <PageContent signedIn={this.state.signedIn} user={this.state.user} />
+        {/*{this.state.notice &&*/}
+        {/*<NoticeMessage noticeMessage={this.state.noticeMessage} />*/}
+        {/*}*/}
+        {/*<PageContent*/}
+        {/*closeSignUpModal={this.closeSignUpModal}*/}
+        {/*signUp={this.state.signUp}*/}
+        {/*signedIn={this.state.signedIn}*/}
+        {/*user={this.state.user}*/}
+        {/*/>*/}
       </main>
     );
   }
