@@ -17,10 +17,20 @@ module.exports = {
         }
       },
       upvotes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model:'upVotes',
+          key: 'count',
+          as:'count'
+        }
       },
       downvotes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model:'downVotes',
+          key: 'count',
+          as:'count'
+        }
       },
       term: {
         type: Sequelize.STRING
