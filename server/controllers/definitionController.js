@@ -44,6 +44,19 @@ definitionController.addDef = (req,res) => {
 }
 
 
+definitionController.delete = (req,res) => {
+  let entryTerm = req.params.query_term;
+  definitions.destroy({where: {term: entryTerm}}).then((rowDeleted) => {
+    if(rowDeleted = 1){
+      console.log('deleted successfuly');
+      res.send('deleted successfuly');
+    }
+  }).catch((err) => {
+    console.log('ERROR!!!!', err);
+  })
+}
+
+
 
 
 

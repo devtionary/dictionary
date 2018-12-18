@@ -3,8 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const userController = require("./controllers/userController");
 const defController = require("./controllers/definitionController");
-
-
+const router = express.Router();         
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('dictionary', 'student', 'ilovetesting', {
@@ -43,9 +42,15 @@ app.post('/api/auth', userController.isUser);
 
 app.post('/api/definitions/',defController.getDef,defController.addDef)
 
-app.get('/api/definitions/:query_term',defController.getDef,(req,res) => {
-  res.send(null);
-});
+
+router.route('/api/definitions/:query_term')
+        .get(defController.getDef,(req,res) => {
+            res.send(null);
+          })
+
+        .delete((req,res) => {
+
+        })
 
 app.listen(8080, () => {
   console.log("listening on 8080")

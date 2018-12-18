@@ -10,6 +10,7 @@
     ]
   },
   "scripts": {
+    "start:prod": "NODE_ENV=production nodemon ./bin/www",
     "webpack": "webpack --mode development",
     "start": "nodemon server/server.js",
     "start:dev": "webpack-dev-server --port 3000"
