@@ -26,7 +26,12 @@ class TopNav extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      signedIn: false,
+    };
+
     this.triggerSignIn = this.triggerSignIn.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   //     fetch("http://localhost:8080/signin", {
@@ -40,6 +45,7 @@ class TopNav extends Component {
   //       }
   //     })
 
+  logout() {}
   triggerSignIn() {
     //   fetch('/api/users', {
     //     method: 'POST',
@@ -63,13 +69,12 @@ class TopNav extends Component {
       <TopNavWrapperStyled className={this.props.className}>
         <DevtionaryLogo />
         <NavActionsStyled>
-          <Button>Sign up</Button>
-          <Button isText>Log in</Button>
-          <SearchIcon />
+          {/*<Button>Sign up</Button>*/}
+          {/*<Button isText>Log in</Button>*/}
           <SignInModal
             signedIn={this.state.signedIn}
-            triggerSignIn={this.triggerSignIn.bind(this)}
-            logout={this.logout.bind(this)}
+            triggerSignIn={this.triggerSignIn}
+            logout={this.logout}
           />
           <SearchIcon />
           {/*{this.state.notice &&*/}
