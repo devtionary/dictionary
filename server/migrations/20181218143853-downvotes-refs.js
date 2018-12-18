@@ -2,7 +2,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Downvotes', {
-    
       uId: {
         type: Sequelize.INTEGER,
         references: {

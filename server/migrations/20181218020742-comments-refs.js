@@ -1,16 +1,8 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Downvotes', {
-    
-      uId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id',
-          as: 'uId'
-        }
-      },
+    return queryInterface.createTable('Comments',{
       dId: {
         type: Sequelize.INTEGER,
         references: {
@@ -19,9 +11,18 @@ module.exports = {
           as: 'dId'
         }
       },
-    });
+      uId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+          as: 'uId'
+        }
+      },
+    })
   },
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Downvotes');
+    return queryInterface.dropTable('Comments');
   }
 };
