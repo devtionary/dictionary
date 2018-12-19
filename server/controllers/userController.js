@@ -22,9 +22,10 @@ const userController = {};
   
   
   userController.addUser = (req, res) => {
-    const email = req.body.email;
-    const avatar = req.body.imageUrl;
+    const email = req.body.profileObj.email;
+    const avatar = req.body.profileObj.imageUrl;
     const accessToken = req.body.accessToken;
+    console.log('ACCESS TOKEN', accessToken)
 
       fetch('https://randomuser.me/api/')
     .then(function(response) {

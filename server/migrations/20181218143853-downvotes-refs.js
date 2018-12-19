@@ -8,7 +8,7 @@ module.exports = {
           key: 'id',
           as: 'uId'
         }
-    }).then(() => {
+      }).then(() => {
       return queryInterface.addColumn('Downvotes','dId',{
           type: Sequelize.INTEGER,
           references: {

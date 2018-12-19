@@ -9,7 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       count: {
-        type: Sequelize.INTEGER,  
+        type: Sequelize.INTEGER, 
+        allowNull: false,
+        defaultValue: 0, 
         unique: true
       }
     
