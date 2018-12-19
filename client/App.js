@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { GlobalStyle, HomeStyled as Home } from './styled/styles';
+import {
+  GlobalStyle,
+  HomeStyled as Home,
+  ProfileStyled as Profile,
+} from './styled/styles';
 import TopNav from './containers/TopNav';
 
 function App() {
@@ -11,6 +15,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/u/:id" component={Profile} />
         </Switch>
       </Router>
     </div>
