@@ -14,6 +14,7 @@ module.exports = {
       console.log('2nd')
       return queryInterface.addColumn('definitions','upvotes',{
           type: Sequelize.INTEGER,
+          defaultValue: 0,
           references: {
             model:'Upvotes',
             key: 'count',
@@ -22,6 +23,7 @@ module.exports = {
       }).then(() => {
         return queryInterface.addColumn('definitions','downvotes',{
             type: Sequelize.INTEGER,
+            defaultValue: 0,
             references: {
               model:'Downvotes',
               key: 'count',

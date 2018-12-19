@@ -41,17 +41,16 @@ app.get('/', (req,res) => {
 
 app.post('/api/auth', userController.isUser);
 
-app.post('/api/definitions/',defController.getDef,defController.addDef)
+app.post('/api/definitions/',defController.addDef)
 
 
-router.route('/api/definitions/:query_term')
-        .get(defController.getDef,(req,res) => {
-            res.send(null);
-          })
+app.get('/api/definitions/:query_term',defController.getDef,(req,res) => {
+    res.send(null);
+    })
 
-        .delete((req,res) => {
+app.delete('/api/definitions/:query_value',defController.delete)
 
-        })
+app.patch('/api/definitions/:query_value',defController.update);
 
 app.listen(8080, () => {
   console.log("listening on 8080")

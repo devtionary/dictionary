@@ -10,6 +10,8 @@ module.exports = {
       }, 
       count: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
         unique: true
       }
     });
