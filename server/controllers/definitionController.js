@@ -6,6 +6,23 @@ const examples = models.Examples;
 const definitionController = {};
 
 
+//get requested definition (empty text)
+definitionController.getRequestedDefs = (req,res,next) => {
+  definitions.findAll({where: {text:""}})
+  .then((list) => {
+    if(list === null){
+      console.log('no requested definitions');
+      res.send(null);
+    }else{
+      console.log('found requested definitions');
+       res.send(JSON.stringify(list));
+    }
+  })
+  .catch((err) => {
+    return res.send(err);
+  })
+}
+
 //search for a definition by term
 definitionController.getDef = (req, res,next) => {
   let entryTerm
@@ -96,7 +113,7 @@ definitionController.delete = (req,res) => {
 
 //update definition
 definitionController.update = (req,res) => {
-  const id = req.params.query_value;
+  const id = req.params.dId;
   const text = req.body.text;
 
   definitions

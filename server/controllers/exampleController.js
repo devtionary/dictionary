@@ -13,7 +13,10 @@ exampleController.getExamples = (req,res,next) => {
       const a = new Promise((resolve,reject) => {
         examples.findAll({where:{dId:e.id}}).then((list) => {
           const defObj = {
-            definition: e,
+            id: e.id,
+            date: e.createdAt,
+            term: e.term,
+            description: e.text,
             examples: list
           }
           resolve(defObj)
@@ -24,7 +27,6 @@ exampleController.getExamples = (req,res,next) => {
   
     Promise.all(promiseArr).then((data) => {
       console.log('=========', data);
-    //   res.send(JSON.stringify(data));
       res.locals.dataList = data;
       next();
     })
@@ -34,7 +36,7 @@ exampleController.getExamples = (req,res,next) => {
   
   //create all examples for definition
 exampleController.addExamples = (req,res,next) => {
-    let definition = res.locals.definition;
+    let def = res.locals.definition;
     let sentenceArr = req.body.sentences;
     const promiseArr = [];
   
@@ -52,7 +54,10 @@ exampleController.addExamples = (req,res,next) => {
   
     Promise.all(promiseArr).then((examplesArr) => {
       const defObj = {
-        definition: definition,
+        id: def.id,
+        date: def.createdAt,
+        term: def.term,
+        description: def.text,
         examples: examplesArr
       }
       res.send(JSON.stringify(defObj));

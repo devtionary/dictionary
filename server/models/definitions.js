@@ -2,8 +2,6 @@
 module.exports = (sequelize, DataTypes) => {
   const definitions = sequelize.define('definitions', {
     uId: DataTypes.INTEGER,
-    upvotes: DataTypes.INTEGER,
-    downvotes: DataTypes.INTEGER,
     term: DataTypes.STRING,
     voice: DataTypes.STRING,
     text: DataTypes.STRING
