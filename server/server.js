@@ -16,14 +16,16 @@ app.get('/', (req, res) => {
 
 app.post('/api/auth', userController.isUser);
 
-app.get('/api/definitions/', defController.findAll);
-app.post('/api/definitions/', defController.addDef);
+app.post('/api/definitions/',defController.addDef,defController.addExamples)
 
-app.get('/api/definitions/:query_term', defController.getDef, (req, res) => {
-  res.send(null);
-});
 
-app.delete('/api/definitions/:query_value', defController.delete);
+app.get('/api/definitions/:term',defController.getDef,defController.getDefsExamples)
+
+app.get('/api/users/:uId',defController.getUserDefs,defController.getDefsExamples)
+
+app.delete('/api/definitions/:dId',defController.delete)
+
+app.patch('/api/definitions/:dId',defController.update);
 
 app.patch('/api/definitions/:query_value', defController.update);
 
