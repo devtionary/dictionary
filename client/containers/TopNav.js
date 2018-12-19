@@ -94,7 +94,9 @@ class TopNav extends Component {
     return (
       <TopNavWrapperStyled className={this.props.className}>
         <NavStyled>
-          <DevtionaryLogo />
+          <a href="/">
+            <DevtionaryLogo />
+          </a>
           <NavActionsStyled>
             {!this.state.signedIn && (
               <SignInModal

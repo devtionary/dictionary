@@ -1,11 +1,21 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { rem } from 'polished';
 import Home from '../containers/Home';
+import Profile from '../containers/Profile';
 
 export const HomeStyled = styled(Home)`
   width: 100%;
   max-width: ${rem('1250px')};
   margin: 0 auto;
+`;
+
+export const ProfileStyled = styled(Profile)`
+  display: grid;
+  grid-template-columns: 400px 109px 2fr;
+  margin: 0 auto;
+  padding-top: ${rem('93px')};
+  max-width: ${rem('1250px')};
+  width: 100%;
 `;
 
 export const GlobalStyle = createGlobalStyle`
