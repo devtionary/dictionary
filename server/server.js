@@ -5,6 +5,7 @@ const userController = require("./controllers/userController");
 const defController = require("./controllers/definitionController");
 const router = express.Router();         
 const Sequelize = require('sequelize');
+const cors = require('cors');
 
 const sequelize = new Sequelize('dictionary', 'student', 'ilovetesting', {
   host: 'localhost',
@@ -32,7 +33,7 @@ sequelize
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cors());
 
 app.get('/', (req,res) => {
   res.send('hi')
