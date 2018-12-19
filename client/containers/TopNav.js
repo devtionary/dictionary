@@ -40,13 +40,13 @@ const UserStyled = styled.div`
   > :first-child {
     margin-right: ${`14px`};
   }
-accessToken
-accessToken
-accessToken
-accessToken
-accessToken
-accessToken
-accessToken
+
+  > div {
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+  }
+
   > div span:first-of-type {
     width: 100%;
     font-weight: bold;
