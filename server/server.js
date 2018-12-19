@@ -41,7 +41,8 @@ app.get('/', (req,res) => {
 
 app.post('/api/auth', userController.isUser);
 
-app.post('/api/definitions/',defController.addDef)
+// app.get('/api/definitions/', defController.findAll);
+app.post('/api/definitions/', defController.addDef);
 
 
 app.get('/api/definitions/:query_term',defController.getDef,(req,res) => {
