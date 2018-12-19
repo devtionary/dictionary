@@ -7,14 +7,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      count: {
-        type: Sequelize.INTEGER, 
-        allowNull: false,
-        defaultValue: 0, 
-        unique: true
       }
-    
     });
   },
   down: (queryInterface, Sequelize) => {

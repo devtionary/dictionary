@@ -10,6 +10,7 @@ const userController = {};
   userController.isUser = (req, res) => {
 
     const accessToken = req.body.accessToken;
+    console.log(accessToken)
     //check if user exists alredy
     Users.findOne({ where: {accessToken: accessToken} }).then(user => {
       if(user === null){
@@ -48,6 +49,9 @@ const userController = {};
       })
     })
   }
+
+
+
 
   module.exports = userController;
 

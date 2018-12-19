@@ -2,8 +2,6 @@
 module.exports = (sequelize, DataTypes) => {
   const definitions = sequelize.define('definitions', {
     uId: DataTypes.INTEGER,
-    upvotes: DataTypes.INTEGER,
-    downvotes: DataTypes.INTEGER,
     term: DataTypes.STRING,
     voice: DataTypes.STRING,
     text: DataTypes.STRING
@@ -25,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     definitions.hasMany(models.Downvotes, {
       foreignKey: 'dId'
     })
+
+    definitions.belongsTo(models.users, {
+      foreignKey: 'uId',
+      onDelete: 'CASCADE'
+ });
   };
   return definitions;
 };

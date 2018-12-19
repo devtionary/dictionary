@@ -10,24 +10,6 @@ module.exports = {
           as: 'uId'
         }
       
-    }).then(() => {
-      return queryInterface.addColumn('definitions','upvotes',{
-          type: Sequelize.INTEGER,
-          references: {
-            model:'Upvotes',
-            key: 'count',
-            as:'upvotes'
-          }
-      }).then(() => {
-        return queryInterface.addColumn('definitions','downvotes',{
-            type: Sequelize.INTEGER,
-            references: {
-              model:'Downvotes',
-              key: 'count',
-              as:'downvotes'
-            }
-        })
-      })
     })
   },
   down: (queryInterface, Sequelize) => {
