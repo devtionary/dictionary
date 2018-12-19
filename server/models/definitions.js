@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     definitions.hasMany(models.Downvotes, {
       foreignKey: 'dId'
     })
+
+    definitions.belongsTo(models.users, {
+      foreignKey: 'uId',
+      onDelete: 'CASCADE'
+ });
   };
   return definitions;
 };
