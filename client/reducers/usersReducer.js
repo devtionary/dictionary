@@ -1,7 +1,9 @@
 import * as types from '../constants/actionTypes';
 
+// const initialState = null;
+
 const initialState = {
-  username: undefined,
+  username: '',
   definitionCount: 0,
   credibility: 0,
   avatarUrl: '',

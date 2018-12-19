@@ -6,7 +6,7 @@ import usersReducer from './usersReducer';
 
 // Combine Reducers
 const reducers = combineReducers({
-  currentUser: usersReducer,
+  curUser: usersReducer,
   definitions: definitionsReducer,
   searchModal: searchReducer,
 });
