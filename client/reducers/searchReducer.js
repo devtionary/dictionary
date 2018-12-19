@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   displaySearch: false,
+  searchTerms: [],
 };
 
 const searchReducer = (state = initialState, action) => {
@@ -15,6 +16,10 @@ const searchReducer = (state = initialState, action) => {
 
     case types.SEARCH_TERM: {
       //get the definitions from action payload
+      console.log(action.payload);
+      const copyState = Object.assign({}, state);
+      copyState.searchTerms = action.payload;
+      return copyState;
     }
   }
   return state;

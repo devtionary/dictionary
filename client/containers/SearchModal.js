@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { rem } from 'polished';
 import { searchTerm } from '../actions/actions';
 import ModalSearchIcon from '../components/svg/modal_search_icon';
+import SearchTermsItem from '../components/SearchTermsItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -16,6 +17,7 @@ const ModalStyle = styled.div`
     height: 100%;
     background: rgba(0, 0, 0, 0.9);
     z-index: 30;
+    color: white;
   }
 
   .modal-main {
@@ -36,7 +38,6 @@ const ModalStyle = styled.div`
   }
 
   #header {
-    color: white;
     background: rgba(0, 0, 0, 0);
   }
 
@@ -57,7 +58,7 @@ const ModalStyle = styled.div`
 class SearchModal extends Component {
   constructor(props) {
     super(props);
-    this.state = { term: '' };
+    this.state = { term: '', lastSearched: '' };
     this.onKeyPressed = this.onKeyPressed.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -77,8 +78,15 @@ class SearchModal extends Component {
   handleOnSubmit(e) {
     e.preventDefault();
     this.props.searchTerm(this.state.term);
+    this.setState({ lastSearched: this.state.term });
   }
 
+  renderList() {
+    return this.props.list.map(definition => {
+      console.log(definition);
+      return <SearchTermsItem term={definition} />;
+    });
+  }
   render() {
     const showHideClassName = this.props.show
       ? 'modal display-block'
@@ -99,6 +107,7 @@ class SearchModal extends Component {
                 />
               </form>
               <ModalSearchIcon />
+              <ul>{this.renderList()}</ul>
             </div>
           </section>
         </div>
@@ -110,7 +119,7 @@ class SearchModal extends Component {
 
 function mapStateToProps(state) {
   return {
-    definitions: state.definitions,
+    list: state.searchModal.searchTerms,
   };
 }
 
