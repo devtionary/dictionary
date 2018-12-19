@@ -66,7 +66,7 @@ class Home extends Component {
           date: '12/18',
           term: 'Spin up a server',
           description: `Originally most servers were storage servers with multiple hard disks attached.
-            
+
             So when a server was started the OS had to boot as well as the HDD all come up to speed before the server was useful. So the term spin up the server refers to the start time, primarily to spin the hard drives to operating speed so it can boot and they are ready to respond.`,
           thumbsUp: 10,
           thumbsDown: 2,

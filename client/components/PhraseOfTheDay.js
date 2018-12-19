@@ -41,7 +41,7 @@ const TermStyled = styled.h3`
   letter-spacing: ${rem('1.27px')};
   line-height: 1.9;
   color: #495460;
-  
+
   &::before {
     content: '“';
     position: absolute;

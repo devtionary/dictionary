@@ -4,6 +4,7 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <div>
@@ -13,9 +14,11 @@ class SearchBar extends Component {
           type="text"
           placeholder="Search for term..."
         />
-        <button type="button" onClick={this.props.handleAllEntries}>See All Entries</button>
+        <button type="button" onClick={this.props.handleAllEntries}>
+          See All Entries
+        </button>
       </div>
-    )
+    );
   }
 }
 

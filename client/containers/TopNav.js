@@ -6,6 +6,10 @@ import Avatar from '../components/Avatar';
 import DevtionaryLogo from '../components/svg/dev_logo';
 import SearchIcon from '../components/svg/search_icon';
 import SignInModal from '../components/SignInModal';
+import SearchModal from '../containers/SearchModal';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toggleDisplaySearch } from '../actions/actions';
 
 const TopNavWrapperStyled = styled.section`
   position: fixed;
@@ -58,36 +62,43 @@ class TopNav extends Component {
     super(props);
 
     this.state = {
-      signedIn: true,
-      curUser: {
-        name: 'genethebene',
-        userUrl: '/genethebene',
-      },
+      signedIn: false,
     };
 
     this.triggerSignIn = this.triggerSignIn.bind(this);
     this.logout = this.logout.bind(this);
+    this.toggleShow = this.toggleShow.bind(this);
   }
 
   logout() {
     this.setState({ signedIn: false });
   }
   triggerSignIn() {
-    //   fetch('/api/users', {
-    //     method: 'POST',
-    //     mode: 'cors',
-    //     headers: {
-    //       'Content-Type': 'application/json; charset=utf-8'
-    //     }
-    //   })
-    //     .then(function(response) {
-    //       return response.json();
-    //     })
-    //     .then(function(myJson) {
-    //       this.setState({ currentUser: JSON.stringify(myJson), { signedIn: true } });
-    //     });
-    // };
-    this.setState({ signedIn: true });
+    const obj = {
+      accessToken: response.accessToken,
+      profileObj: response.profileObj,
+    };
+    console.log(obj);
+    fetch('http://localhost:8080/api/auth', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(obj),
+    })
+      .then(function(response) {
+        console.log('RESPONSE', response);
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        this.setState({ currentUser: JSON.stringify(myJson), signedIn: true });
+      });
+  }
+
+  toggleShow() {
+    this.props.toggleDisplaySearch();
   }
 
   render() {
@@ -105,7 +116,11 @@ class TopNav extends Component {
                 logout={this.logout}
               />
             )}
-            <SearchIcon />
+            <SearchIcon toggleShow={this.toggleShow} />
+            <SearchModal
+              show={this.props.displaySearch}
+              toggleShow={this.toggleShow}
+            />
             {this.state.signedIn && (
               <UserStyled>
                 <Avatar user={this.state.curUser} size="lg" anchor />
@@ -122,4 +137,16 @@ class TopNav extends Component {
   }
 }
 
-export default TopNav;
+function mapStateToProps(state) {
+  return { displaySearch: state.searchModal.displaySearch };
+}
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    { toggleDisplaySearch: toggleDisplaySearch },
+    dispatch
+  );
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopNav);
