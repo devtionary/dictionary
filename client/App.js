@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
+  DefinitionStyled as Definition,
   GlobalStyle,
   HomeStyled as Home,
   ProfileStyled as Profile,
@@ -16,6 +17,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/u/:id" component={Profile} />
+          <Route path="/definitions/:term" component={Definition} />
         </Switch>
       </Router>
     </div>
