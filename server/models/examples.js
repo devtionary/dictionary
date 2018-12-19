@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Examples.associate = function(models) {
     // associations can be defined here
+    Examples.belongsTo(models.definitions, {
+      foreignKey: 'uId',
+      onDelete: 'CASCADE'
+ });
   };
   return Examples;
 };
