@@ -46,6 +46,16 @@ const UsernameStyled = styled(Link)`
   }
 `;
 
+const DateSpansStyled = styled.span`
+  font-family: 'Cutive Mono', sans-serif;
+  color: #495460;
+  font-size: ${rem('14px')};
+  letter-spacing: ${rem('0.37px')};
+  line-height: 1.4;
+  text-decoration: none;
+  margin-left: ${rem('4px')};
+`;
+
 export const DefinitionFooter = props => (
   <DefinitionFooterContainer>
     <div>
@@ -55,12 +65,14 @@ export const DefinitionFooter = props => (
           {props.user.name}
         </UsernameStyled>
       )}
-      {props.user && props.hasDate && <span>|</span>}
-      {props.user && props.hasDate && <span>{props.definition.createdOn}</span>}
+      {props.user && props.hasDate && <DateSpansStyled>|</DateSpansStyled>}
+      {props.user && props.hasDate && (
+        <DateSpansStyled>{props.hasDate}</DateSpansStyled>
+      )}
     </div>
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       {props.hasComments && props.comments && (
-        <UserButton>{props.comments.count}</UserButton>
+        <UserButton>{props.comments.length}</UserButton>
       )}
       <Thumbs
         size="small"
@@ -139,4 +151,37 @@ export const DefinitionTermLg = styled(DefinitionTermBase)`
   font-weight: 500;
   letter-spacing: ${rem('0.53px')};
   line-height: 1.6;
+`;
+
+export const DefinitionExamples = ({ children }) => <ul>{children}</ul>;
+
+const DefinitionExampleBase = ({ children, className, counter }) => (
+  <li className={className}>
+    <span>{counter}.</span>
+    <span> {children}</span>
+  </li>
+);
+
+export const DefinitionExample = styled(DefinitionExampleBase)`
+  span {
+    margin-right: ${rem('10px')};
+  }
+  display: flex;
+  font-family: 'HK Grotesk', sans-serif;
+  font-size: ${rem('14px')};
+  letter-spacing: ${rem('0.37px')};
+  line-height: 1.3;
+  color: #495460;
+
+  &:first-of-type {
+    margin-top: ${rem('30px')};
+  }
+
+  &:last-of-type {
+    margin-bottom: ${rem('30px')};
+  }
+
+  & + & {
+    margin-top: ${rem('10px')};
+  }
 `;

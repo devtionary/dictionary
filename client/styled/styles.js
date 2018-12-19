@@ -2,6 +2,16 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { rem } from 'polished';
 import Home from '../containers/Home';
 import Profile from '../containers/Profile';
+import Definition from '../containers/Defintion';
+
+export const DefinitionStyled = styled(Definition)`
+  display: grid;
+  grid-template-columns: ${rem('591px')} 1fr ${rem('350px')};
+  margin: 0 auto;
+  padding-top: ${rem('93px')};
+  max-width: ${rem('1250px')};
+  width: 100%;
+`;
 
 export const HomeStyled = styled(Home)`
   width: 100%;
