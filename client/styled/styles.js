@@ -19,7 +19,7 @@ export const ProfileStyled = styled(Profile)`
 `;
 
 export const GlobalStyle = createGlobalStyle`
-  /* http://meyerweb.com/eric/tools/css/reset/ 
+  /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
   */
@@ -32,8 +32,8 @@ export const GlobalStyle = createGlobalStyle`
   dl, dt, dd, ol, ul, li,
   fieldset, form, label, legend,
   table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
   menu, nav, output, ruby, section, summary,
   time, mark, audio, video {
     margin: 0;
@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
     vertical-align: baseline;
   }
   /* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure, 
+  article, aside, details, figcaption, figure,
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
@@ -66,7 +66,7 @@ export const GlobalStyle = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
-  
+
   /* Fonts */
   @font-face {
     font-family: 'HK Grotesk';
@@ -78,7 +78,7 @@ export const GlobalStyle = createGlobalStyle`
     url('/fonts/HKGrotesk-Bold.woff2') format('woff2'), /* Modern Browsers */
     url('/fonts/HKGrotesk-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
   }
-  
+
   @font-face {
       font-family: 'HK Grotesk';
       font-weight: 500;
@@ -89,7 +89,7 @@ export const GlobalStyle = createGlobalStyle`
       url('/fonts/HKGrotesk-Medium.woff2') format('woff2'), /* Modern Browsers */
       url('/fonts/HKGrotesk-Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
   }
-  
+
   @font-face {
       font-family: 'HK Grotesk';
       font-weight: 300;
@@ -100,7 +100,7 @@ export const GlobalStyle = createGlobalStyle`
       url('/fonts/HKGrotesk-Light.woff2') format('woff2'), /* Modern Browsers */
       url('/fonts/HKGrotesk-Light.ttf')  format('truetype'), /* Safari, Android, iOS */
   }
-  
+
   @font-face {
       font-family: 'HK Grotesk';
       font-weight: 300;
@@ -111,7 +111,7 @@ export const GlobalStyle = createGlobalStyle`
       url('/fonts/HKGrotesk-Light.woff2') format('woff2'), /* Modern Browsers */
       url('/fonts/HKGrotesk-Light.ttf')  format('truetype'), /* Safari, Android, iOS */
   }
-  
+
   @font-face {
       font-family: 'Cutive Mono';
       font-weight: 500;
@@ -122,7 +122,7 @@ export const GlobalStyle = createGlobalStyle`
   *, *::after, *::before {
     box-sizing: border-box;
   }
-  
+
   /* Base styles */
   body {
     font-family: "Hk Grotesk", sans-serif;
