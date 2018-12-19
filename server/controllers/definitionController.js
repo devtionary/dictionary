@@ -6,11 +6,13 @@ const definitionController = {};
 
 
 definitionController.getDef = (req, res,next) => {
+  let entryTerm
+  
   if(req.method === "POST"){
-    let entryTerm = req.body.term;
+   entryTerm = req.body.term;
   }
   if(req.method === "GET"){
-    let entryTerm = req.params.query_term
+   entryTerm = req.params.query_term
   }
 
   definitions.findOne({ where: {term: entryTerm} })
