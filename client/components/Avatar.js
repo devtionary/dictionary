@@ -8,8 +8,10 @@ const AvatarContainerStyled = styled.span`
   display: block;
   border-radius: 50%;
   border: 3px solid #495460;
-  width: ${rem('27px')};
-  height: ${rem('27px')};
+  width: ${props =>
+    props.size === 'lg' ? `${rem('40px')}` : `${rem('27px')}`};
+  height: ${props =>
+    props.size === 'lg' ? `${rem('40px')}` : `${rem('27px')}`};
   overflow: hidden;
 
   img {
@@ -18,17 +20,30 @@ const AvatarContainerStyled = styled.span`
   }
 `;
 
-function Avatar({ user: { avatarUrl, name, userUrl } }) {
-  return (
-    <Link to={userUrl}>
-      <AvatarContainerStyled>
-        <img
-          src={avatarUrl ? avatarUrl : avatarDefault}
-          alt={`${name}'s avatar`}
-        />
-      </AvatarContainerStyled>
-    </Link>
-  );
+function Avatar({ anchor, size, user: { avatarUrl, name, userUrl } }) {
+  if (anchor) {
+    return (
+      <a href={userUrl}>
+        <AvatarContainerStyled size={size}>
+          <img
+            src={avatarUrl ? avatarUrl : avatarDefault}
+            alt={`${name}'s avatar`}
+          />
+        </AvatarContainerStyled>
+      </a>
+    );
+  } else {
+    return (
+      <Link to={userUrl}>
+        <AvatarContainerStyled size={size}>
+          <img
+            src={avatarUrl ? avatarUrl : avatarDefault}
+            alt={`${name}'s avatar`}
+          />
+        </AvatarContainerStyled>
+      </Link>
+    );
+  }
 }
 
 export default Avatar;

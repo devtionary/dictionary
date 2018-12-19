@@ -118,7 +118,5 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Hk Grotesk", sans-serif;
     font-size: 16px;
     font-weight: 500;
-    padding-left: ${rem('60px')};
-    padding-right: ${rem('60px')};
   }
 `;

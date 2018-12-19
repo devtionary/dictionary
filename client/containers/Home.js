@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TopNav from '../components/TopNav';
 import PhraseOfTheDay from '../components/PhraseOfTheDay';
+import RequestedPhrases from '../components/RequestedPhrases';
 import {
   Definition,
   DefinitionTerm,
@@ -13,15 +13,25 @@ import { rem } from 'polished';
 const ContentContainerStyled = styled.div`
   padding-top: ${rem('100px')};
   display: grid;
-  grid-template-columns: 1.5fr ${rem(528)} 0.6fr 2fr;
+  grid-template-columns: ${props =>
+    props.curUser
+      ? `${rem(528)} 0.2fr 1.8fr 1fr 1.2fr`
+      : `1.5fr ${rem(528)} 0.6fr 2fr`};
 `;
 
 const PhrasesContainerStyled = styled.div`
-  grid-column: 2;
+  grid-column: ${props => (props.curUser ? 1 : 2)};
+`;
+
+const RequestedPhrasesStyled = styled(RequestedPhrases)`
+  grid-column: 5;
 `;
 
 const RecentPhrasesContainerStyled = styled.aside`
-  grid-column: 4;
+  position: sticky;
+  top: ${rem('20px')};
+  height: 100vh;
+  grid-column: ${props => (props.curUser ? 3 : 4)};
 `;
 
 const RecentPhrasesHeaderStyled = styled.aside`
@@ -42,6 +52,14 @@ class Home extends Component {
 
     // TODO: Move into reducer
     this.state = {
+      curUser: {
+        username: '',
+        definitionCount: 0,
+        credibility: 0,
+        avatarUrl: '',
+        upVotes: [],
+        downVotes: [],
+      },
       phrases: [
         {
           id: 1,
@@ -102,19 +120,41 @@ class Home extends Component {
           thumbsDown: 2,
         },
       ],
+      requestedPhrases: [
+        {
+          id: 1,
+          term: 'Super random',
+          link: 'definitions/1',
+        },
+        {
+          id: 2,
+          term: 'OOTB',
+          link: 'definitions/2',
+        },
+        {
+          id: 3,
+          term: 'WYSIWYG',
+          link: 'definitions/3',
+        },
+        {
+          id: 4,
+          term: 'Automagically',
+          link: 'definitions/4',
+        },
+      ],
     };
   }
 
   render() {
     return (
       <main className={this.props.className}>
-        <ContentContainerStyled>
-          <PhrasesContainerStyled>
+        <ContentContainerStyled curUser={this.state.curUser}>
+          <PhrasesContainerStyled curUser={this.state.curUser}>
             {this.state.phrases.map((phrase, idx) => (
               <PhraseOfTheDay key={idx} phrase={phrase} />
             ))}
           </PhrasesContainerStyled>
-          <RecentPhrasesContainerStyled>
+          <RecentPhrasesContainerStyled curUser={this.state.curUser}>
             <RecentPhrasesHeaderStyled>
               Recently created phrases
             </RecentPhrasesHeaderStyled>
@@ -141,6 +181,11 @@ class Home extends Component {
               }
             })}
           </RecentPhrasesContainerStyled>
+          {this.state.curUser && (
+            <RequestedPhrasesStyled
+              requestedPhrases={this.state.requestedPhrases}
+            />
+          )}
         </ContentContainerStyled>
         {/*{this.state.notice &&*/}
         {/*<NoticeMessage noticeMessage={this.state.noticeMessage} />*/}
