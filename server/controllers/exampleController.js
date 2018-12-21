@@ -26,7 +26,7 @@ exampleController.getExamples = (req,res,next) => {
     });
   
     Promise.all(promiseArr).then((data) => {
-      console.log('=========', data);
+      console.log('====examples =====', data);
       res.locals.dataList = data;
       next();
     })
@@ -43,7 +43,7 @@ exampleController.addExamples = (req,res,next) => {
     sentenceArr.forEach((e) => {
       console.log('creating examples')
       const a = new Promise((resolve,reject) => {
-        examples.create({uId: definition.uId, dId: definition.id, text: e})
+        examples.create({uId: def.uId, dId: def.id, text: e})
         .then((example) => {
           resolve(example);
         })

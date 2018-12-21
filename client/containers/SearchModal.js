@@ -18,19 +18,17 @@ const ModalStyle = styled.div`
     background: rgba(0, 0, 0, 0.9);
     z-index: 30;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .modal-main {
+    margin-top: 100px;
     position: fixed;
     width: 80%;
     height: auto;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .display-block {
-    display: block;
+    align-self: flex-start;
   }
 
   .display-none {
@@ -88,10 +86,10 @@ class SearchModal extends Component {
     });
   }
   render() {
-    const showHideClassName = this.props.show
-      ? 'modal display-block'
-      : 'modal display-none';
-
+    const showHideClassName = this.props.show ? 'modal ' : 'modal display-none';
+    if (this.props.show) {
+      window.document.body.style.overflow = 'hidden';
+    } else window.document.body.style.overflow = 'initial';
     return ReactDOM.createPortal(
       <ModalStyle>
         <div id="modal" className={showHideClassName}>

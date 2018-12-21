@@ -20,14 +20,14 @@ const AvatarContainerStyled = styled.span`
   }
 `;
 
-function Avatar({ anchor, size, user: { avatarUrl, name, userUrl } }) {
+function Avatar({ anchor, size, user: { avatar, username, userUrl } }) {
   if (anchor) {
     return (
       <a href={userUrl}>
         <AvatarContainerStyled size={size}>
           <img
-            src={avatarUrl ? avatarUrl : avatarDefault}
-            alt={`${name}'s avatar`}
+            src={avatar ? avatar : avatarDefault}
+            alt={`${username}'s avatar`}
           />
         </AvatarContainerStyled>
       </a>
@@ -37,8 +37,8 @@ function Avatar({ anchor, size, user: { avatarUrl, name, userUrl } }) {
       <Link to={userUrl}>
         <AvatarContainerStyled size={size}>
           <img
-            src={avatarUrl ? avatarUrl : avatarDefault}
-            alt={`${name}'s avatar`}
+            src={avatar ? avatar : avatarDefault}
+            alt={`${username}'s avatar`}
           />
         </AvatarContainerStyled>
       </Link>

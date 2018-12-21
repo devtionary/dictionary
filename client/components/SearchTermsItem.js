@@ -45,7 +45,7 @@ export default class SearchTermsItem extends Component {
             <h1>{this.props.term.term}</h1>
           </div>
           <div id="text-box">
-            <h1>{this.props.term.text}</h1>
+            <h1>{this.props.term.description}</h1>
           </div>
           <div id="link-box">
             <h1>Read More</h1>

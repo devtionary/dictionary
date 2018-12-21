@@ -73,13 +73,13 @@ class TopNav extends Component {
   logout() {
     this.setState({ signedIn: false });
   }
-  triggerSignIn() {
+  triggerSignIn(response) {
     const obj = {
       accessToken: response.accessToken,
       profileObj: response.profileObj,
     };
-    console.log(obj);
-    fetch('http://localhost:8080/api/auth', {
+    self = this;
+    fetch('http://localhost:8000/api/auth', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -88,12 +88,11 @@ class TopNav extends Component {
       body: JSON.stringify(obj),
     })
       .then(function(response) {
-        console.log('RESPONSE', response);
         return response.json();
       })
       .then(function(myJson) {
         console.log(myJson);
-        this.setState({ currentUser: JSON.stringify(myJson), signedIn: true });
+        self.setState({ currentUser: myJson, signedIn: true });
       });
   }
 
@@ -102,6 +101,7 @@ class TopNav extends Component {
   }
 
   render() {
+    console.log(this.state.signedIn);
     return (
       <TopNavWrapperStyled className={this.props.className}>
         <NavStyled>
@@ -123,10 +123,10 @@ class TopNav extends Component {
             />
             {this.state.signedIn && (
               <UserStyled>
-                <Avatar user={this.state.curUser} size="lg" anchor />
+                <Avatar user={this.state.currentUser} size="lg" anchor />
                 <div>
                   <span>Welcome back,</span>
-                  <span>{this.state.curUser.name}</span>
+                  <span>{this.state.currentUser.username}</span>
                 </div>
               </UserStyled>
             )}
