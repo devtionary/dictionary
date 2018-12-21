@@ -32,8 +32,6 @@ app.post('/api/comments/', commentController.addComment);
 
 app.post('/api/upvote', upvoteController.addUpvote);
 
-app.post('/api/upvote', upvoteController.addUpvote);
-
 //gets
 app.get(
   '/api/definitions/:term',

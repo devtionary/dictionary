@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { rem } from 'polished';
 
 const TermStyle = styled.div`
   #definition {
@@ -8,8 +9,8 @@ const TermStyle = styled.div`
     color: white;
     border: none;
     background: rgba(0, 0, 0, 0);
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid;
     display: flex;
   }

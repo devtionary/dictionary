@@ -39,7 +39,6 @@ downvotesController.getDownvotes = (req, res, next) => {
 
   Promise.all(promiseArr).then(data => {
     res.locals.dataList = data;
-
     res.send(JSON.stringify(data));
   });
 };

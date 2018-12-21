@@ -16,11 +16,9 @@ export const searchTerm = term => {
     mode: 'cors',
   })
     .then(function(response) {
-      console.log('RESPONSE', response);
       return response.json();
     })
     .then(function(myJson) {
-      console.log('myJson', myJson);
       return myJson;
     });
   return {

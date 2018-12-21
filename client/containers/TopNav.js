@@ -91,7 +91,6 @@ class TopNav extends Component {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
         self.setState({ currentUser: myJson, signedIn: true });
       });
   }
@@ -101,7 +100,6 @@ class TopNav extends Component {
   }
 
   render() {
-    console.log(this.state.signedIn);
     return (
       <TopNavWrapperStyled className={this.props.className}>
         <NavStyled>
