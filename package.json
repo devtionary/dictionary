@@ -10,10 +10,7 @@
     ]
   },
   "scripts": {
-    "start:server": "NODE_ENV=production nodemon ./bin/www",
-    "webpack": "webpack --mode development",
-    "start": "nodemon server/server.js",
-    "start:client": "webpack-dev-server --port 3000"
+    "webpack": "webpack --mode development"
   },
   "author": "Altai Chiang <altai.chiang@gmail.com>",
   "dependencies": {
@@ -61,8 +58,10 @@
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
+    "gulp": "^3.9.1",
     "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.15.3",
-    "webpack": "^4.27.1"
+    "webpack": "^4.27.1",
+    "webpack-stream": "^5.2.1"
   }
 }

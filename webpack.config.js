@@ -8,16 +8,17 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    filename: 'bundle.js'
+  },
+  optimization: {
+    minimize: false
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'client/public/', 'index.html'),
+      template: './client/public/index.html',
       filename: './index.html',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(['dist']),
   ],
   module: {
     rules: [
