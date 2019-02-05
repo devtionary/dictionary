@@ -9,7 +9,6 @@ const userController = {};
 
   userController.isUser = (req, res) => {
     const googleId = req.body.profileObj.googleId;
-    console.log('isUser', googleId);
     //check if user exists alredy
     Users.findOne({ where: {googleId: googleId} }).then(user => {
       if(user === null){
