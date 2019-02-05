@@ -1,34 +1,44 @@
-const models = require("../models");
+const models = require(".");
 const path = require('path');
-const Sequelize = require('sequelize');
+const db = require('./index.js');
 const fetch = require('node-fetch');
 
-const Users = models.users;
+// const Users = models.users;
 const userController = {};
 
 
-  userController.isUser = (req, res) => {
-
-    const googleId = req.body.profileObj.googleId;
-    console.log(googleId)
-    //check if user exists alredy
-    Users.findOne({ where: {googleId: googleId} }).then(user => {
-      if(user === null){
-        userController.addUser(req,res);
-      }else{
-        res.send(JSON.stringify(user))
+userController.isUser = (req, res) => {
+  const googleId = req.body.profileObj.googleId;
+  console.log("ANYTHING");
+  const query = {
+    name: 'check-if-user',
+    text: 'SELECT * FROM users WHERE googleid = $1',
+    values: [googleId]
+  };
+  db.query(query)
+    .then((result) => {
+      console.log("CHECK USER EXISTS");
+      if (result.rows.length === 0) {
+        userController.addUser(req, res);
+      } else {
+        console.log("USER EXISTS!!!!!!!");
+        res.send(JSON.stringify(result.rows));
       }
     })
-  }
-  
-  
-  userController.addUser = (req, res) => {
-    const email = req.body.profileObj.email;
-    const avatar = req.body.profileObj.imageUrl;
-    const googleId = req.body.profileObj.googleId;
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
+}
 
-      fetch('https://randomuser.me/api/')
-    .then(function(response) {
+
+userController.addUser = (req, res) => {
+  const email = req.body.profileObj.email;
+  const avatar = req.body.profileObj.imageUrl;
+  const googleId = req.body.profileObj.googleId;
+
+  fetch('https://randomuser.me/api/')
+    .then(function (response) {
       return response.json();
     })
     .then((myJson) => {
@@ -36,26 +46,31 @@ const userController = {};
       console.log(username);
       return username
     }).then((username) => {
-      Users.create({googleId: googleId,
-                   username: username,
-                   email: email, 
-                   avatar: avatar })
-                   .then((user) => {
-                     console.log("USER HAS BEEN CREATED");
-                     res.send(JSON.stringify(user))
-      }).catch((err) => {
-        console.log("ERROR!!!!!",err)
-      })
-    })
-  }
+      let querystr = "INSERT INTO users \
+          (username, email, avatar, credibility, googleid) \
+          VALUES($1, $2, $3, $4, $5)";
+      const query = {
+        name: 'add-user',
+        text: querystr,
+        values: [username, email, avatar, 0, googleId]
+      };
+      db.query(query)
+        .then((user) => {
+          console.log("USER HAS BEEN CREATED");
+          res.send(JSON.stringify(user))
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).end();
+        });
+
+    }).catch((err) => {
+      console.log("ERROR!!!!!", err)
+      res.status(500).end();
+    });
+}
 
 
 
 
-  module.exports = userController;
-
-
-
-
-
-  
+module.exports = userController;
