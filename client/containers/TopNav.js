@@ -79,8 +79,7 @@ class TopNav extends Component {
       profileObj: response.profileObj,
     };
     self = this;
-    //TODO: sign in
-    fetch('http://localhost:8000/api/auth', {
+    fetch('/api/auth', {
       method: 'POST',
       mode: 'cors',
       headers: {

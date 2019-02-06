@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
@@ -13,9 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('hi');
-});
+app.use(express.static(path.join(__dirname, '../dist')));
 
 
 //authorization
@@ -100,7 +99,7 @@ app.get(
 // //edits
 
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.ENV_VARIABLE !== 'production') {
   app.listen(8080);
   console.log('listening on port 8080');
 }
