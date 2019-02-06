@@ -21,12 +21,7 @@ app.get('/', (req, res) => {
 //authorization
 app.post('/api/auth/', userController.isUser);
 
-// //posts
-app.post(
-  '/api/definitions/',
-  defController.addDef,
-  // exampleController.addExamples
-);
+//words
 
 app.post(
   '/api/words/',
@@ -41,6 +36,37 @@ app.get(
 app.get(
   '/api/words/',
   wordsController.getAllWords
+);
+
+app.delete('/api/words/:wid', wordsController.delete);
+
+app.patch('/api/words/:wid', wordsController.update);
+
+//definitions
+
+// app.get(
+//   '/api/definitions/:wid',
+//   defController.getDef
+// );
+
+app.get(
+  '/api/definitions/:uid',
+  defController.getUserDefs
+);
+
+app.post(
+  '/api/definitions/',
+  defController.addDef
+);
+
+app.delete(
+  '/api/definitions/:did',
+  defController.delete
+);
+
+app.patch(
+  '/api/definitions/:did',
+  defController.update
 );
 
 
@@ -64,9 +90,7 @@ app.get(
 // app.get('api/definitions/requested', defController.getRequestedDefs);
 
 // //edits
-app.delete('/api/words/:wid', wordsController.delete);
 
-app.patch('/api/words/:wid', wordsController.update);
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(8080);

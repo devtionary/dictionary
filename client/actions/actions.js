@@ -11,6 +11,7 @@ export const toggleDisplaySearch = () => ({
 
 export const searchTerm = term => {
   // term = term.toLowerCase();
+  //TODO: get terms
   const request = fetch(`http://localhost:8000/api/definitions/${term}`, {
     method: 'GET',
     mode: 'cors',
