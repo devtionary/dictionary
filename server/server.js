@@ -4,11 +4,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
 const defController = require('./controllers/definitionController');
-const exampleController = require('./controllers/exampleController');
-const commentController = require('./controllers/commentController');
-const upvoteController = require('./controllers/UpvotesController');
-const downvoteController = require('./controllers/DownvotesController');
-const router = express.Router();
+const wordsController = require('./controllers/wordController');
+// const exampleController = require('./controllers/exampleController');
+const votesController = require('./controllers/votesController');
+// const router = express.Router();
 const cors = require('cors');
 
 app.use(bodyParser.json());
@@ -17,47 +16,88 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
-//authorization
-app.post('/api/auth', userController.isUser);
 
-//posts
+//authorization
+app.post('/api/auth/', userController.isUser);
+
+//words
+
+app.post(
+  '/api/words/',
+  wordsController.addTerm
+);
+
+app.get(
+  '/api/words/:term',
+  wordsController.getCertainWord
+);
+
+app.get(
+  '/api/words/',
+  wordsController.getAllWords
+);
+
+app.delete('/api/words/:wid', wordsController.delete);
+
+app.patch('/api/words/:wid', wordsController.update);
+
+//definitions
+
+app.get(
+  '/api/definitions/',
+  defController.getDefByQueryType
+);
+
+// app.get(
+//   '/api/definitions/:uid',
+//   defController.getUserDefs
+// );
+
 app.post(
   '/api/definitions/',
-  defController.addDef,
-  exampleController.addExamples
+  defController.addDef
 );
 
-app.post('/api/comments/', commentController.addComment);
+app.delete(
+  '/api/definitions/:did',
+  defController.delete
+);
 
-app.post('/api/upvote', upvoteController.addUpvote);
+app.patch(
+  '/api/definitions/:did',
+  defController.update
+);
 
-app.post('/api/upvote', upvoteController.addUpvote);
 
-//gets
+app.post(
+  '/api/votes/', 
+  votesController.voteAction
+);
+
 app.get(
-  '/api/definitions/:term',
-  defController.getDef,
-  exampleController.getExamples,
-  commentController.getComments,
-  upvoteController.getUpvotes,
-  downvoteController.getDownvotes
+  '/api/votes/',
+  votesController.getDefVotes
 );
 
-app.get(
-  '/api/users/:uId',
-  defController.getUserDefs,
-  exampleController.getExamples,
-  commentController.getComments,
-  upvoteController.getUpvotes,
-  downvoteController.getDownvotes
-);
+// //gets
+// app.get(
+//   '/api/definitions/:term',
+//   defController.getDef,
+//   exampleController.getExamples,
+//   upvoteController.getUpvotes,
+// );
 
-app.get('api/definitions/requested', defController.getRequestedDefs);
+// app.get(
+//   '/api/users/:uId',
+//   defController.getUserDefs,
+//   exampleController.getExamples,
+//   upvoteController.getUpvotes,
+// );
 
-//edits
-app.delete('/api/definitions/:dId', defController.delete);
+// app.get('api/definitions/requested', defController.getRequestedDefs);
 
-app.patch('/api/definitions/:dId', defController.update);
+// //edits
+
 
 if (process.env.ENV_VARIABLE !== 'production') {
   app.listen(8080);

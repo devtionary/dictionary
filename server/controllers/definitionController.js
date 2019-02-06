@@ -1,128 +1,153 @@
 const path = require('path');
-const models = require('../models');
-const definitions = models.definitions;
-const examples = models.Examples;
+// const models = require('../models');
+// const definitions = models.definitions;
+// const examples = models.Examples;
+const db = require('./index.js');
 
 const definitionController = {};
 
 //get requested definition (empty text)
-definitionController.getRequestedDefs = (req, res, next) => {
-  definitions
-    .findAll({ where: { text: '' } })
-    .then(list => {
-      if (list === null) {
-        console.log('no requested definitions');
-        res.send(null);
-      } else {
-        console.log('found requested definitions');
-        res.send(JSON.stringify(list));
-      }
-    })
-    .catch(err => {
-      return res.send(err);
-    });
+definitionController.getAllDefs = (req, res, next) => {
+  // definitions
+  //   .findAll({ where: { text: '' } })
+  //   .then(list => {
+  //     if (list === null) {
+  //       console.log('no requested definitions');
+  //       res.send(null);
+  //     } else {
+  //       console.log('found requested definitions');
+  //       res.send(JSON.stringify(list));
+  //     }
+  //   })
+  //   .catch(err => {
+  //     return res.send(err);
+  //   });
 };
 
-//search for a definition by term
-definitionController.getDef = (req, res, next) => {
-  console.log(req.params.term);
-  let entryTerm;
-  if (req.method === 'POST') {
-    entryTerm = req.body.term;
+//search for all definitions by term
+definitionController.getDefByQueryType = (req, res, next) => {
+  console.log(req.query);
+  if(req.query.wid !== undefined && req.query.wid !== null) {
+    let wid = req.query.wid;
+    const query = {
+      name: 'get-term-definition-by-wid',
+      text: 'SELECT * FROM definitions WHERE wid = $1',
+      values: [wid]
+    };
+    db.query(query)
+      .then((result) => {
+        //query all the definitions
+        console.log(result);
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
+  } else {
+    let uid = req.query.uid;
+    const query = {
+      name: 'get-term-definition-by-uid',
+      text: 'SELECT * FROM definitions WHERE uid = $1',
+      values: [uid]
+    };
+    db.query(query)
+      .then((result) => {
+        //query all the definitions
+        console.log(result);
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
   }
-  if (req.method === 'GET') {
-    entryTerm = req.params.term;
-  }
-
-  console.log('entry term', entryTerm);
-
-  definitions
-    .findAll({ where: { term: entryTerm } })
-    .then(list => {
-      if (list.length === 0) {
-        console.log('term not found');
-        res.status(404).send([]);
-      } else {
-        console.log('term found');
-        res.locals.defList = list;
-        next();
-      }
-    })
-    .catch(err => {
-      return res.send(err);
-    });
 };
 
 //get all definitions from a user
 definitionController.getUserDefs = (req, res, next) => {
-  const userId = req.params.uId;
-
-  definitions
-    .findAll({ where: { uId: userId } })
-    .then(list => {
-      if (list === null) {
-        console.log('user has no definitions');
-        res.send(null);
-      } else {
-        console.log('found user definitions');
-        // res.send(JSON.stringify(list));
-        res.locals.defList = list;
-        next();
-      }
+  let uid = req.params.uid;
+  const query = {
+    name: 'get-term-definition',
+    text: 'SELECT * FROM definitions WHERE uid = $1',
+    values: [uid]
+  };
+  db.query(query)
+    .then((result) => {
+      //query all the definitions
+      console.log(result);
+      res.send(result.rows);
     })
-    .catch(err => {
-      return res.send(err);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
     });
 };
 
 //create definition
+//do I need to check for duplicates?
 definitionController.addDef = (req, res, next) => {
-  let entryTerm = req.body.term;
   let entryText = req.body.text;
-  let uId = req.body.id;
-
-  definitions
-    .create({ uId: uId, term: entryTerm, text: entryText })
-    .then(definition => {
-      console.log('DEFINITION HAS BEEN CREATED: ', definition.id);
-      res.locals.definition = definition;
-      // res.send(JSON.stringify(definition));
-      next();
+  let uid = req.body.uid;
+  let wid = req.body.wid;
+  console.log(uid, entryText);
+  let queryStr = "INSERT INTO definitions(text, wid, uid) VALUES($1, $2, $3)";
+  const query = {
+    name: 'add-new-term',
+    text: queryStr,
+    values: [entryText, wid, uid]
+  };
+  db.query(query)
+    .then((result) => {
+      console.log("USER HAS ADDED DEFINITION");
+      res.send(result);
     })
-    .catch(err => {
-      console.log('ERROR!!!!!', err);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
     });
 };
 
 //delete definition by id
 definitionController.delete = (req, res) => {
-  let id = req.params.dId;
+  let did = req.params.did;
 
-  definitions
-    .destroy({ where: { id: id } })
-    .then(rowDeleted => {
-      if ((rowDeleted = 1)) {
-        console.log('deleted successfuly');
-        res.send('deleted successfuly');
-      }
+  let queryStr = "DELETE FROM definitions WHERE id = $1";
+  const query = {
+    name: 'delete-definition',
+    text: queryStr,
+    values: [did]
+  };
+  db.query(query)
+    .then((result) => {
+      console.log("USER HAS DELETED DEFINITION");
+      res.send(result);
     })
-    .catch(err => {
-      console.log('ERROR!!!!', err);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
     });
 };
 
 //update definition
 definitionController.update = (req, res) => {
-  const id = req.params.dId;
-  const text = req.body.text;
+  const did = req.params.did;
+  const updateToText = req.body.text;
 
-  definitions
-    .update({ text: text }, { where: { id: id } })
-    .then(updatedRow => {
-      res.json(updatedRow);
+  let queryStr = "UPDATE definitions SET text = $1 WHERE id = $2";
+  const query = {
+    name: 'update-definition',
+    text: queryStr,
+    values: [updateToText, did]
+  };
+  db.query(query)
+    .then((result) => {
+      console.log("USER HAS UPDATED DEFINITION");
+      res.send(result);
     })
-    .catch(err => {
-      console.log('ERROR!!!', err);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
     });
 };
 
