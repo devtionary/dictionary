@@ -53,23 +53,41 @@ wordController.getCertainWord = (req, res, next) => {
 //create word
 wordController.addTerm = (req, res, next) => {
   let entryTerm = req.body.term;
-  let uId = req.body.id;
-  console.log(uId, entryTerm);
-  let queryStr = "INSERT INTO words(term, uid) VALUES($1, $2)";
+  let uid = req.body.uid;
+  console.log(uid, entryTerm);
+  let queryStr = 'SELECT * FROM words WHERE term = $1';
   const query = {
-    name: 'add-new-term',
+    name: 'get-certain-words',
     text: queryStr,
-    values: [entryTerm, uId]
+    values: [entryTerm]
   };
   db.query(query)
-        .then((result) => {
-          console.log("USER HAS ADDED WORD");
-          res.send(JSON.stringify(result));
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).end();
-        });
+    .then((result) => {
+      //query all the definitions
+      if(result.rows.length <= 0) {
+        let queryStr = "INSERT INTO words(term, uid) VALUES($1, $2)";
+        const query = {
+          name: 'add-new-term',
+          text: queryStr,
+          values: [entryTerm, uid]
+        };
+        db.query(query)
+              .then((result) => {
+                console.log("USER HAS ADDED WORD");
+                res.send(result);
+              })
+              .catch((err) => {
+                console.error(err);
+                res.status(500).end();
+              });
+      } else {
+        res.send('word already exists');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 //delete word by id

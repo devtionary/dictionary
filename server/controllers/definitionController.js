@@ -25,24 +25,43 @@ definitionController.getAllDefs = (req, res, next) => {
 };
 
 //search for all definitions by term
-definitionController.getDef = (req, res, next) => {
-  console.log(req.params.wid);
-  let wid = req.params.wid;
-  const query = {
-    name: 'get-term-definition',
-    text: 'SELECT * FROM definitions WHERE wid = $1',
-    values: [wid]
-  };
-  db.query(query)
-  .then((result) => {
-    //query all the definitions
-    console.log(result);
-    res.send(result.rows);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  });
+definitionController.getDefByQueryType = (req, res, next) => {
+  console.log(req.query);
+  if(req.query.wid !== undefined && req.query.wid !== null) {
+    let wid = req.query.wid;
+    const query = {
+      name: 'get-term-definition-by-wid',
+      text: 'SELECT * FROM definitions WHERE wid = $1',
+      values: [wid]
+    };
+    db.query(query)
+      .then((result) => {
+        //query all the definitions
+        console.log(result);
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
+  } else {
+    let uid = req.query.uid;
+    const query = {
+      name: 'get-term-definition-by-uid',
+      text: 'SELECT * FROM definitions WHERE uid = $1',
+      values: [uid]
+    };
+    db.query(query)
+      .then((result) => {
+        //query all the definitions
+        console.log(result);
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
+  }
 };
 
 //get all definitions from a user
@@ -54,18 +73,19 @@ definitionController.getUserDefs = (req, res, next) => {
     values: [uid]
   };
   db.query(query)
-  .then((result) => {
-    //query all the definitions
-    console.log(result);
-    res.send(result.rows);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  });
+    .then((result) => {
+      //query all the definitions
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 //create definition
+//do I need to check for duplicates?
 definitionController.addDef = (req, res, next) => {
   let entryText = req.body.text;
   let uid = req.body.uid;
@@ -78,14 +98,14 @@ definitionController.addDef = (req, res, next) => {
     values: [entryText, wid, uid]
   };
   db.query(query)
-        .then((result) => {
-          console.log("USER HAS ADDED DEFINITION");
-          res.send(result);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).end();
-        });
+    .then((result) => {
+      console.log("USER HAS ADDED DEFINITION");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 //delete definition by id
@@ -99,14 +119,14 @@ definitionController.delete = (req, res) => {
     values: [did]
   };
   db.query(query)
-        .then((result) => {
-          console.log("USER HAS DELETED DEFINITION");
-          res.send(result);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).end();
-        });
+    .then((result) => {
+      console.log("USER HAS DELETED DEFINITION");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 //update definition
@@ -121,14 +141,14 @@ definitionController.update = (req, res) => {
     values: [updateToText, did]
   };
   db.query(query)
-        .then((result) => {
-          console.log("USER HAS UPDATED DEFINITION");
-          res.send(result);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).end();
-        });
+    .then((result) => {
+      console.log("USER HAS UPDATED DEFINITION");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 module.exports = definitionController;

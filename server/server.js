@@ -5,7 +5,7 @@ const userController = require('./controllers/userController');
 const defController = require('./controllers/definitionController');
 const wordsController = require('./controllers/wordController');
 // const exampleController = require('./controllers/exampleController');
-// const upvoteController = require('./controllers/UpvotesController');
+const votesController = require('./controllers/votesController');
 // const router = express.Router();
 const cors = require('cors');
 
@@ -44,15 +44,15 @@ app.patch('/api/words/:wid', wordsController.update);
 
 //definitions
 
-// app.get(
-//   '/api/definitions/:wid',
-//   defController.getDef
-// );
-
 app.get(
-  '/api/definitions/:uid',
-  defController.getUserDefs
+  '/api/definitions/',
+  defController.getDefByQueryType
 );
+
+// app.get(
+//   '/api/definitions/:uid',
+//   defController.getUserDefs
+// );
 
 app.post(
   '/api/definitions/',
@@ -70,7 +70,15 @@ app.patch(
 );
 
 
-// app.post('/api/upvote', upvoteController.addUpvote);
+app.post(
+  '/api/votes/', 
+  votesController.voteAction
+);
+
+app.get(
+  '/api/votes/',
+  votesController.getDefVotes
+);
 
 // //gets
 // app.get(
