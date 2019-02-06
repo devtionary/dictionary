@@ -2,11 +2,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
-// const defController = require('./controllers/definitionController');
+const defController = require('./controllers/definitionController');
+const wordsController = require('./controllers/wordController');
 // const exampleController = require('./controllers/exampleController');
-// const commentController = require('./controllers/commentController');
 // const upvoteController = require('./controllers/UpvotesController');
-// const downvoteController = require('./controllers/DownvotesController');
 // const router = express.Router();
 const cors = require('cors');
 
@@ -20,16 +19,30 @@ app.get('/', (req, res) => {
 
 
 //authorization
-app.post('/api/auth', userController.isUser);
+app.post('/api/auth/', userController.isUser);
 
 // //posts
-// app.post(
-//   '/api/definitions/',
-//   defController.addDef,
-//   exampleController.addExamples
-// );
+app.post(
+  '/api/definitions/',
+  defController.addDef,
+  // exampleController.addExamples
+);
 
-// app.post('/api/comments/', commentController.addComment);
+app.post(
+  '/api/words/',
+  wordsController.addTerm
+);
+
+app.get(
+  '/api/words/:term',
+  wordsController.getCertainWord
+);
+
+app.get(
+  '/api/words/',
+  wordsController.getAllWords
+);
+
 
 // app.post('/api/upvote', upvoteController.addUpvote);
 
@@ -38,26 +51,22 @@ app.post('/api/auth', userController.isUser);
 //   '/api/definitions/:term',
 //   defController.getDef,
 //   exampleController.getExamples,
-//   commentController.getComments,
 //   upvoteController.getUpvotes,
-//   downvoteController.getDownvotes
 // );
 
 // app.get(
 //   '/api/users/:uId',
 //   defController.getUserDefs,
 //   exampleController.getExamples,
-//   commentController.getComments,
 //   upvoteController.getUpvotes,
-//   downvoteController.getDownvotes
 // );
 
 // app.get('api/definitions/requested', defController.getRequestedDefs);
 
 // //edits
-// app.delete('/api/definitions/:dId', defController.delete);
+app.delete('/api/words/:wid', wordsController.delete);
 
-// app.patch('/api/definitions/:dId', defController.update);
+app.patch('/api/words/:wid', wordsController.update);
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(8080);

@@ -1,0 +1,118 @@
+const path = require('path');
+// const models = require('../models');
+// const definitions = models.definitions;
+// const examples = models.Examples;
+const db = require('./index.js');
+
+const wordController = {};
+
+//get all words
+wordController.getAllWords = (req, res, next) => {
+  let queryStr = 'SELECT * FROM words';
+  const query = {
+    name: 'get-all-words',
+    text: queryStr
+  };
+  db.query(query)
+    .then((result) => {
+      //query all the definitions
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
+};
+
+//search for a word 
+wordController.getCertainWord = (req, res, next) => {
+  console.log(req.params.term);
+  let entryTerm = req.params.term;
+
+  console.log('entry term', entryTerm);
+
+  let queryStr = 'SELECT * FROM words WHERE term = $1';
+  const query = {
+    name: 'get-certain-words',
+    text: queryStr,
+    values: [entryTerm]
+  };
+  db.query(query)
+    .then((result) => {
+      //query all the definitions
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
+};
+
+//create word
+wordController.addTerm = (req, res, next) => {
+  let entryTerm = req.body.term;
+  let uId = req.body.id;
+  console.log(uId, entryTerm);
+  let queryStr = "INSERT INTO words(term, uid) VALUES($1, $2)";
+  const query = {
+    name: 'add-new-term',
+    text: queryStr,
+    values: [entryTerm, uId]
+  };
+  db.query(query)
+        .then((result) => {
+          console.log("USER HAS ADDED WORD");
+          res.send(JSON.stringify(result));
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).end();
+        });
+};
+
+//delete word by id
+wordController.delete = (req, res) => {
+  let wid = req.params.wid;
+
+  let queryStr = "DELETE FROM words WHERE id = $1";
+  const query = {
+    name: 'delete-term',
+    text: queryStr,
+    values: [wid]
+  };
+  db.query(query)
+        .then((result) => {
+          console.log("USER HAS DELETED WORD");
+          res.send(result);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).end();
+        });
+};
+
+//update definition
+wordController.update = (req, res) => {
+  const wid = req.params.wid;
+  const updateToTerm = req.body.term;
+
+  let queryStr = "UPDATE words SET term = $1 WHERE id = $2";
+  const query = {
+    name: 'update-term',
+    text: queryStr,
+    values: [updateToTerm, wid]
+  };
+  db.query(query)
+        .then((result) => {
+          console.log("USER HAS UPDATED WORD");
+          res.send(result);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).end();
+        });
+};
+
+module.exports = wordController;

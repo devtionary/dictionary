@@ -1,56 +1,62 @@
 const path = require('path');
-const models = require('../models');
-const definitions = models.definitions;
-const examples = models.Examples;
+// const models = require('../models');
+// const definitions = models.definitions;
+// const examples = models.Examples;
+const db = require('./index.js');
 
 const definitionController = {};
 
 //get requested definition (empty text)
-definitionController.getRequestedDefs = (req, res, next) => {
-  definitions
-    .findAll({ where: { text: '' } })
-    .then(list => {
-      if (list === null) {
-        console.log('no requested definitions');
-        res.send(null);
-      } else {
-        console.log('found requested definitions');
-        res.send(JSON.stringify(list));
-      }
-    })
-    .catch(err => {
-      return res.send(err);
-    });
+definitionController.getAllDefs = (req, res, next) => {
+  // definitions
+  //   .findAll({ where: { text: '' } })
+  //   .then(list => {
+  //     if (list === null) {
+  //       console.log('no requested definitions');
+  //       res.send(null);
+  //     } else {
+  //       console.log('found requested definitions');
+  //       res.send(JSON.stringify(list));
+  //     }
+  //   })
+  //   .catch(err => {
+  //     return res.send(err);
+  //   });
 };
 
 //search for a definition by term
 definitionController.getDef = (req, res, next) => {
   console.log(req.params.term);
-  let entryTerm;
-  if (req.method === 'POST') {
-    entryTerm = req.body.term;
-  }
-  if (req.method === 'GET') {
-    entryTerm = req.params.term;
-  }
+  let entryTerm = req.params.term;;
+  // if (req.method === 'POST') {
+  //   entryTerm = req.body.term;
+  // }
+  // if (req.method === 'GET') {
+  //   entryTerm = req.params.term;
+  // }
 
   console.log('entry term', entryTerm);
 
-  definitions
-    .findAll({ where: { term: entryTerm } })
-    .then(list => {
-      if (list.length === 0) {
-        console.log('term not found');
-        res.status(404).send([]);
-      } else {
-        console.log('term found');
-        res.locals.defList = list;
-        next();
-      }
-    })
-    .catch(err => {
-      return res.send(err);
-    });
+  // definitions
+  //   .findAll({ where: { term: entryTerm } })
+  //   .then(list => {
+  //     if (list.length === 0) {
+  //       console.log('term not found');
+  //       res.status(404).send([]);
+  //     } else {
+  //       console.log('term found');
+  //       res.locals.defList = list;
+  //       next();
+  //     }
+  //   })
+  //   .catch(err => {
+  //     return res.send(err);
+  //   });
+  const query = {
+    name: 'get-term-definition',
+    text: 'SELECT * FROM definitions WHERE wid = $1',
+    values: [googleId]
+  };
 };
 
 //get all definitions from a user
