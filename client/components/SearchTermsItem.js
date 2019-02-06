@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { rem } from 'polished';
 
 const TermStyle = styled.div`
   #definition {
@@ -8,8 +9,8 @@ const TermStyle = styled.div`
     color: white;
     border: none;
     background: rgba(0, 0, 0, 0);
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid;
     display: flex;
   }
@@ -45,7 +46,7 @@ export default class SearchTermsItem extends Component {
             <h1>{this.props.term.term}</h1>
           </div>
           <div id="text-box">
-            <h1>{this.props.term.text}</h1>
+            <h1>{this.props.term.description}</h1>
           </div>
           <div id="link-box">
             <h1>Read More</h1>

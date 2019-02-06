@@ -43,6 +43,8 @@ upVotesController.getUpvotes = (req,res,next) => {
 
     Promise.all(promiseArr).then((data) => {
         res.locals.dataList = data;
+        console.log('====upvotes===',data)
+        next();
         // res.send(JSON.stringify(data));
     })
 }

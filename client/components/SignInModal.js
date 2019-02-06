@@ -9,7 +9,7 @@ class SignInModal extends Component {
   }
 
   onSuccessHandler(response) {
-    console.log('Logged In as', response);
+    console.log(response);
     this.props.triggerSignIn(response);
   }
 

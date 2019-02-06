@@ -8,11 +8,9 @@ const userController = {};
 
 
   userController.isUser = (req, res) => {
-
-    const accessToken = req.body.accessToken;
-    console.log(accessToken)
+    const googleId = req.body.profileObj.googleId;
     //check if user exists alredy
-    Users.findOne({ where: {accessToken: accessToken} }).then(user => {
+    Users.findOne({ where: {googleId: googleId} }).then(user => {
       if(user === null){
         userController.addUser(req,res);
       }else{
@@ -25,8 +23,7 @@ const userController = {};
   userController.addUser = (req, res) => {
     const email = req.body.profileObj.email;
     const avatar = req.body.profileObj.imageUrl;
-    const accessToken = req.body.accessToken;
-    console.log('ACCESS TOKEN', accessToken)
+    const googleId = req.body.profileObj.googleId;
 
       fetch('https://randomuser.me/api/')
     .then(function(response) {
@@ -37,7 +34,7 @@ const userController = {};
       console.log(username);
       return username
     }).then((username) => {
-      Users.create({accessToken: accessToken,
+      Users.create({googleId: googleId,
                    username: username,
                    email: email, 
                    avatar: avatar })

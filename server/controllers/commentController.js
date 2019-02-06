@@ -35,7 +35,9 @@ commentsController.getComments = (req,res,next) => {
     })
 
     Promise.all(promiseArr).then((data) => {
+        console.log('=====comments==',data)
         res.locals.dataList = data;
+        next();
     })
 }
 

@@ -5,6 +5,7 @@ import { rem } from 'polished';
 import { searchTerm } from '../actions/actions';
 import ModalSearchIcon from '../components/svg/modal_search_icon';
 import SearchTermsItem from '../components/SearchTermsItem';
+import CreateRequestDef from '../components/CreateRequestDef';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -18,19 +19,17 @@ const ModalStyle = styled.div`
     background: rgba(0, 0, 0, 0.9);
     z-index: 30;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .modal-main {
+    margin-top: 5rem;
     position: fixed;
     width: 80%;
     height: auto;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .display-block {
-    display: block;
+    align-self: flex-start;
   }
 
   .display-none {
@@ -77,21 +76,31 @@ class SearchModal extends Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    this.props.searchTerm(this.state.term);
-    this.setState({ lastSearched: this.state.term });
+    if (this.state.term !== '') {
+      this.props.searchTerm(this.state.term);
+    }
   }
 
   renderList() {
     return this.props.list.map(definition => {
-      console.log(definition);
-      return <SearchTermsItem term={definition} />;
+      return <SearchTermsItem key={definition.id} term={definition} />;
     });
   }
-  render() {
-    const showHideClassName = this.props.show
-      ? 'modal display-block'
-      : 'modal display-none';
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.list !== prevProps.list) {
+      this.setState({ lastSearched: this.state.term });
+    }
+  }
+
+  render() {
+    const windowStyle = window.document.body.style;
+    const showHideClassName = this.props.show ? 'modal ' : 'modal display-none';
+    if (this.props.show) {
+      windowStyle.overflow = 'hidden';
+    } else windowStyle.overflow = 'initial';
+
+    const list = this.renderList();
     return ReactDOM.createPortal(
       <ModalStyle>
         <div id="modal" className={showHideClassName}>
@@ -107,7 +116,10 @@ class SearchModal extends Component {
                 />
               </form>
               <ModalSearchIcon />
-              <ul>{this.renderList()}</ul>
+              {list.length !== 0 && <ul>{list}</ul>}
+              {list.length === 0 && this.state.lastSearched !== '' && (
+                <CreateRequestDef term={this.state.lastSearched} />
+              )}
             </div>
           </section>
         </div>
