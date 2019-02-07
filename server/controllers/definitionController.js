@@ -33,7 +33,7 @@ definitionController.getDefsForWords = (req, res, next) => {
   }
   const query = {
     text: `SELECT * from definitions where wId = ANY ($1)`,
-    values: [words]
+    values: [words],
   };
   db.query(query)
     .then(result => {
@@ -69,6 +69,7 @@ definitionController.getDefByQueryType = (req, res, next) => {
           return acc;
         }, {});
         res.locals.defs = defsReduced;
+        res.locals.wid = wid;
         next();
       })
       .catch(err => {

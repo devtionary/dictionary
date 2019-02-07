@@ -76,6 +76,39 @@ votesController.getDefVotes = (req, res, next) => {
     });
 };
 
+votesController.tallyVotesForDefs = (req, res, next) => {
+  const defs = [];
+  for (let did of Object.keys(res.locals.defs)) {
+    defs.push(did);
+  }
+
+  const query = {
+    text: `SELECT * from votes where dId = ANY ($1)`,
+    values: [defs],
+  };
+  db.query(query)
+    .then(result => {
+      const tally = {};
+      for (let vote of result.rows) {
+        if (!tally[vote.did]) {
+          tally[vote.did] = { up: 0, down: 0 };
+        }
+        tally[vote.did][vote.typeofvote]++;
+      }
+      for (let votes of Object.keys(tally)) {
+        res.locals.defs[votes].votes = tally[votes];
+      }
+      const word = res.locals.word;
+      word.defs = res.locals.defs;
+      word.user = res.locals.user;
+      res.send(word);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
+};
+
 votesController.getTopVoteByDefIds = (req, res, next) => {
   let stringBuilder = '(';
 

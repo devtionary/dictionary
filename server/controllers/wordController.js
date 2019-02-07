@@ -49,6 +49,26 @@ wordController.getCertainWord = (req, res, next) => {
     });
 };
 
+//search for word to build
+wordController.getWordById = (req, res, next) => {
+  let queryStr = `SELECT * FROM words WHERE id = ${res.locals.wid}`;
+  const query = {
+    name: `get-certain-word-${res.locals.wid}`,
+    text: queryStr,
+  };
+  db.query(query)
+    .then(result => {
+      //query all the words
+      res.locals.word = result.rows[0];
+      res.locals.uid = result.rows[0].uid;
+      next();
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
+};
+
 //search for word and its similarities
 wordController.getRelatedWords = (req, res, next) => {
   console.log(req.params.term);
