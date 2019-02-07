@@ -44,7 +44,10 @@ app.patch('/api/words/:wid', wordsController.update);
 app.get(
   '/api/definitions/',
   defController.getDefByQueryType,
-  exampleController.getExamplesForDefs
+  wordsController.getWordById,
+  userController.getUserById,
+  exampleController.getExamplesForDefs,
+  votesController.tallyVotesForDefs
 );
 
 // app.get(
