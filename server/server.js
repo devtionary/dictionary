@@ -50,10 +50,10 @@ app.get(
   votesController.tallyVotesForDefs
 );
 
-// app.get(
-//   '/api/definitions/:uid',
-//   defController.getUserDefs
-// );
+app.get(
+  '/api/definitions/users/:uid',
+  defController.getUserDefs
+);
 
 app.post('/api/definitions/', defController.addDef);
 

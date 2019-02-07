@@ -101,7 +101,24 @@ definitionController.getUserDefs = (req, res, next) => {
   let uid = req.params.uid;
   const query = {
     name: 'get-term-definition',
-    text: 'SELECT * FROM definitions WHERE uid = $1',
+    text: `
+    Select users.username, users.id AS uid, term, definitions.id AS did, text, upvotecount, downvotecount
+    FROM users
+    JOIN definitions
+    ON definitions.uid = users.id
+    FULL JOIN (
+      SELECT did, count(*) AS upvotecount
+      FROM votes where typeofvote = 'up'
+      GROUP BY did) AS upvotes
+    ON upvotes.did = definitions.id
+    FULL JOIN (
+      SELECT did, count(*) AS downvotecount
+      FROM votes where typeofvote = 'down'
+      GROUP BY did) AS downvotes
+    ON downvotes.did = definitions.id
+    FULL JOIN words
+    ON words.id = definitions.wid
+    WHERE users.id = $1;`,
     values: [uid],
   };
   db.query(query)
