@@ -89,6 +89,7 @@ class SearchModal extends Component {
           key={word.id}
           term={word.term}
           definition={word.definition.text}
+          wId={word.id}
         />
       );
     });
@@ -106,9 +107,8 @@ class SearchModal extends Component {
     if (this.props.show) {
       windowStyle.overflow = 'hidden';
     } else windowStyle.overflow = 'initial';
-
     const list = this.renderList();
-    return ReactDOM.createPortal(
+    return (
       <ModalStyle>
         <div id="modal" className={showHideClassName}>
           <section className="modal-main">
@@ -130,8 +130,7 @@ class SearchModal extends Component {
             </div>
           </section>
         </div>
-      </ModalStyle>,
-      contents
+      </ModalStyle>
     );
   }
 }

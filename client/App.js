@@ -11,14 +11,16 @@ import TopNav from './containers/TopNav';
 function App() {
   return (
     <div>
-      <TopNav />
       <GlobalStyle />
       <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/u/:id" component={Profile} />
-          <Route path="/definitions/:term" component={Definition} />
-        </Switch>
+        <div>
+          <TopNav />
+          <Switch id="switch">
+            <Route exact path="/" component={Home} />
+            <Route path="/u/:id" component={Profile} />
+            <Route path="/definitions/:term" component={Definition} />
+          </Switch>
+        </div>
       </Router>
     </div>
   );
