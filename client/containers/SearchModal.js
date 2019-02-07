@@ -76,14 +76,23 @@ class SearchModal extends Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    if (this.state.term !== '') {
-      this.props.searchTerm(this.state.term);
+    let term = this.state.term.trim();
+    if (term.length !== 0) {
+      this.props.searchTerm(term);
     }
   }
 
   renderList() {
-    return this.props.list.map(definition => {
-      return <SearchTermsItem key={definition.id} term={definition} />;
+    return this.props.list.map(word => {
+      return (
+        <SearchTermsItem
+          key={word.id}
+          term={word.term}
+          definition={word.definition.text}
+          wId={word.id}
+          toggleShow={this.props.toggleShow}
+        />
+      );
     });
   }
 
@@ -99,9 +108,8 @@ class SearchModal extends Component {
     if (this.props.show) {
       windowStyle.overflow = 'hidden';
     } else windowStyle.overflow = 'initial';
-
     const list = this.renderList();
-    return ReactDOM.createPortal(
+    return (
       <ModalStyle>
         <div id="modal" className={showHideClassName}>
           <section className="modal-main">
@@ -123,8 +131,7 @@ class SearchModal extends Component {
             </div>
           </section>
         </div>
-      </ModalStyle>,
-      contents
+      </ModalStyle>
     );
   }
 }

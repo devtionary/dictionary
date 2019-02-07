@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { rem } from 'polished';
 
 const TermStyle = styled.div`
@@ -43,13 +44,15 @@ export default class SearchTermsItem extends Component {
       <TermStyle>
         <div id="definition">
           <div id="term-box">
-            <h1>{this.props.term.term}</h1>
+            <h1>{this.props.term}</h1>
           </div>
           <div id="text-box">
-            <h1>{this.props.term.description}</h1>
+            <h1>{this.props.definition}</h1>
           </div>
           <div id="link-box">
-            <h1>Read More</h1>
+            <Link to="/definitions/1" onClick={this.props.toggleShow}>
+              Read More
+            </Link>
           </div>
         </div>
       </TermStyle>

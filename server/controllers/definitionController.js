@@ -24,23 +24,54 @@ definitionController.getAllDefs = (req, res, next) => {
   //   });
 };
 
+//get top def
+definitionController.getDefsForWords = (req, res, next) => {
+  let i = 0;
+  let words = [];
+  for (let word of res.locals.words) {
+    words.push(word.id);
+  }
+  const query = {
+    text: `SELECT * from definitions where wId = ANY ($1)`,
+    values: [words]
+  };
+  db.query(query)
+    .then(result => {
+      //query all the definitions
+      let defsReduced = result.rows.reduce((acc, elem) => {
+        acc[elem.id] = elem; // or what ever object you want inside
+        return acc;
+      }, {});
+      res.locals.defs = defsReduced;
+      next();
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
+};
+
 //search for all definitions by term
 definitionController.getDefByQueryType = (req, res, next) => {
   console.log(req.query);
-  if(req.query.wid !== undefined && req.query.wid !== null) {
+  if (req.query.wid !== undefined && req.query.wid !== null) {
     let wid = req.query.wid;
     const query = {
       name: 'get-term-definition-by-wid',
       text: 'SELECT * FROM definitions WHERE wid = $1',
-      values: [wid]
+      values: [wid],
     };
     db.query(query)
-      .then((result) => {
+      .then(result => {
         //query all the definitions
-        console.log(result);
-        res.send(result.rows);
+        let defsReduced = result.rows.reduce((acc, elem) => {
+          acc[elem.id] = elem; // or what ever object you want inside
+          return acc;
+        }, {});
+        res.locals.defs = defsReduced;
+        next();
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         res.status(500).end();
       });
@@ -49,15 +80,15 @@ definitionController.getDefByQueryType = (req, res, next) => {
     const query = {
       name: 'get-term-definition-by-uid',
       text: 'SELECT * FROM definitions WHERE uid = $1',
-      values: [uid]
+      values: [uid],
     };
     db.query(query)
-      .then((result) => {
+      .then(result => {
         //query all the definitions
         console.log(result);
         res.send(result.rows);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         res.status(500).end();
       });
@@ -70,15 +101,15 @@ definitionController.getUserDefs = (req, res, next) => {
   const query = {
     name: 'get-term-definition',
     text: 'SELECT * FROM definitions WHERE uid = $1',
-    values: [uid]
+    values: [uid],
   };
   db.query(query)
-    .then((result) => {
+    .then(result => {
       //query all the definitions
       console.log(result);
       res.send(result.rows);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
@@ -91,18 +122,18 @@ definitionController.addDef = (req, res, next) => {
   let uid = req.body.uid;
   let wid = req.body.wid;
   console.log(uid, entryText);
-  let queryStr = "INSERT INTO definitions(text, wid, uid) VALUES($1, $2, $3)";
+  let queryStr = 'INSERT INTO definitions(text, wid, uid) VALUES($1, $2, $3)';
   const query = {
     name: 'add-new-term',
     text: queryStr,
-    values: [entryText, wid, uid]
+    values: [entryText, wid, uid],
   };
   db.query(query)
-    .then((result) => {
-      console.log("USER HAS ADDED DEFINITION");
+    .then(result => {
+      console.log('USER HAS ADDED DEFINITION');
       res.send(result);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
@@ -112,18 +143,18 @@ definitionController.addDef = (req, res, next) => {
 definitionController.delete = (req, res) => {
   let did = req.params.did;
 
-  let queryStr = "DELETE FROM definitions WHERE id = $1";
+  let queryStr = 'DELETE FROM definitions WHERE id = $1';
   const query = {
     name: 'delete-definition',
     text: queryStr,
-    values: [did]
+    values: [did],
   };
   db.query(query)
-    .then((result) => {
-      console.log("USER HAS DELETED DEFINITION");
+    .then(result => {
+      console.log('USER HAS DELETED DEFINITION');
       res.send(result);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
@@ -134,18 +165,18 @@ definitionController.update = (req, res) => {
   const did = req.params.did;
   const updateToText = req.body.text;
 
-  let queryStr = "UPDATE definitions SET text = $1 WHERE id = $2";
+  let queryStr = 'UPDATE definitions SET text = $1 WHERE id = $2';
   const query = {
     name: 'update-definition',
     text: queryStr,
-    values: [updateToText, did]
+    values: [updateToText, did],
   };
   db.query(query)
-    .then((result) => {
-      console.log("USER HAS UPDATED DEFINITION");
+    .then(result => {
+      console.log('USER HAS UPDATED DEFINITION');
       res.send(result);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
