@@ -11,21 +11,21 @@ wordController.getAllWords = (req, res, next) => {
   let queryStr = 'SELECT * FROM words';
   const query = {
     name: 'get-all-words',
-    text: queryStr
+    text: queryStr,
   };
   db.query(query)
-    .then((result) => {
+    .then(result => {
       //query all the definitions
       console.log(result);
       res.send(result.rows);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
 };
 
-//search for a word 
+//search for a word
 wordController.getCertainWord = (req, res, next) => {
   console.log(req.params.term);
   let entryTerm = req.params.term;
@@ -36,15 +36,39 @@ wordController.getCertainWord = (req, res, next) => {
   const query = {
     name: 'get-certain-words',
     text: queryStr,
-    values: [entryTerm]
+    values: [entryTerm],
   };
   db.query(query)
-    .then((result) => {
-      //query all the definitions
-      console.log(result);
+    .then(result => {
+      //query all the words
       res.send(result.rows);
     })
-    .catch((err) => {
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
+};
+
+//search for word and its similarities
+wordController.getRelatedWords = (req, res, next) => {
+  console.log(req.params.term);
+  let entryTerm = req.params.term;
+
+  console.log('entry term', entryTerm);
+
+  let queryStr = `SELECT * FROM words WHERE term LIKE '%${entryTerm}%';`;
+  const query = {
+    text: queryStr,
+  };
+  db.query(query)
+    .then(result => {
+      //query all the words
+      if (result.rows.length > 0) {
+        res.locals.words = result.rows;
+        next();
+      } else res.send([]); //Send an empty array if the word wasn't found
+    })
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
@@ -59,32 +83,32 @@ wordController.addTerm = (req, res, next) => {
   const query = {
     name: 'get-certain-words',
     text: queryStr,
-    values: [entryTerm]
+    values: [entryTerm],
   };
   db.query(query)
-    .then((result) => {
+    .then(result => {
       //query all the definitions
-      if(result.rows.length <= 0) {
-        let queryStr = "INSERT INTO words(term, uid) VALUES($1, $2)";
+      if (result.rows.length <= 0) {
+        let queryStr = 'INSERT INTO words(term, uid) VALUES($1, $2)';
         const query = {
           name: 'add-new-term',
           text: queryStr,
-          values: [entryTerm, uid]
+          values: [entryTerm, uid],
         };
         db.query(query)
-              .then((result) => {
-                console.log("USER HAS ADDED WORD");
-                res.send(result);
-              })
-              .catch((err) => {
-                console.error(err);
-                res.status(500).end();
-              });
+          .then(result => {
+            console.log('USER HAS ADDED WORD');
+            res.send(result);
+          })
+          .catch(err => {
+            console.error(err);
+            res.status(500).end();
+          });
       } else {
         res.send('word already exists');
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).end();
     });
@@ -94,21 +118,21 @@ wordController.addTerm = (req, res, next) => {
 wordController.delete = (req, res) => {
   let wid = req.params.wid;
 
-  let queryStr = "DELETE FROM words WHERE id = $1";
+  let queryStr = 'DELETE FROM words WHERE id = $1';
   const query = {
     name: 'delete-term',
     text: queryStr,
-    values: [wid]
+    values: [wid],
   };
   db.query(query)
-        .then((result) => {
-          console.log("USER HAS DELETED WORD");
-          res.send(result);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).end();
-        });
+    .then(result => {
+      console.log('USER HAS DELETED WORD');
+      res.send(result);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 //update definition
@@ -116,21 +140,21 @@ wordController.update = (req, res) => {
   const wid = req.params.wid;
   const updateToTerm = req.body.term;
 
-  let queryStr = "UPDATE words SET term = $1 WHERE id = $2";
+  let queryStr = 'UPDATE words SET term = $1 WHERE id = $2';
   const query = {
     name: 'update-term',
     text: queryStr,
-    values: [updateToTerm, wid]
+    values: [updateToTerm, wid],
   };
   db.query(query)
-        .then((result) => {
-          console.log("USER HAS UPDATED WORD");
-          res.send(result);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).end();
-        });
+    .then(result => {
+      console.log('USER HAS UPDATED WORD');
+      res.send(result);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
 };
 
 module.exports = wordController;

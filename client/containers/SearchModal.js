@@ -76,14 +76,21 @@ class SearchModal extends Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    if (this.state.term !== '') {
-      this.props.searchTerm(this.state.term);
+    let term = this.state.term.trim();
+    if (term.length !== 0) {
+      this.props.searchTerm(term);
     }
   }
 
   renderList() {
-    return this.props.list.map(definition => {
-      return <SearchTermsItem key={definition.id} term={definition} />;
+    return this.props.list.map(word => {
+      return (
+        <SearchTermsItem
+          key={word.id}
+          term={word.term}
+          definition={word.definition.text}
+        />
+      );
     });
   }
 
