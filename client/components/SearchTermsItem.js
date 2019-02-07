@@ -50,11 +50,7 @@ export default class SearchTermsItem extends Component {
             <h1>{this.props.definition}</h1>
           </div>
           <div id="link-box">
-            <Link
-              to={{
-                pathname: '/api/definitions/',
-                search: `?wid=${this.props.wId}`,
-              }}>
+            <Link to="/definitions/1" onClick={this.props.toggleShow}>
               Read More
             </Link>
           </div>

@@ -90,6 +90,7 @@ class SearchModal extends Component {
           term={word.term}
           definition={word.definition.text}
           wId={word.id}
+          toggleShow={this.props.toggleShow}
         />
       );
     });
