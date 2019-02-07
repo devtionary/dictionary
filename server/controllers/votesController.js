@@ -1,6 +1,3 @@
-const path = require('path');
-// const models = require('../models');
-// const upvotes = models.Upvotes;
 const db = require('./index.js');
 
 const votesController = {};
@@ -81,13 +78,15 @@ votesController.getDefVotes = (req, res, next) => {
 
 votesController.getTopVoteByDefIds = (req, res, next) => {
   let stringBuilder = '(';
+
+  const defs = [];
   for (let did of Object.keys(res.locals.defs)) {
-    stringBuilder += `'` + did + `', `;
+    defs.push(did);
   }
-  stringBuilder = `${stringBuilder.substring(0, stringBuilder.length - 2)})`;
 
   const query = {
-    text: `SELECT * from votes where dId in ${stringBuilder};`,
+    text: `SELECT * from votes where dId = ANY ($1)`,
+    values: [defs],
   };
   db.query(query)
     .then(result => {

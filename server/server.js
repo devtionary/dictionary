@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
 const defController = require('./controllers/definitionController');
 const wordsController = require('./controllers/wordController');
+const exampleController = require('./controllers/exampleController');
 // const exampleController = require('./controllers/exampleController');
 const votesController = require('./controllers/votesController');
 // const router = express.Router();
@@ -23,10 +24,7 @@ app.post('/api/auth/', userController.isUser);
 
 app.post('/api/words/', wordsController.addTerm);
 
-app.get(
-  '/api/words/:term',
-  wordsController.getCertainWord
-);
+app.get('/api/words/:term', wordsController.getCertainWord);
 
 app.get(
   '/api/related-words/:term',
@@ -43,7 +41,11 @@ app.patch('/api/words/:wid', wordsController.update);
 
 //definitions
 
-app.get('/api/definitions/', defController.getDefByQueryType);
+app.get(
+  '/api/definitions/',
+  defController.getDefByQueryType,
+  exampleController.getExamplesForDefs
+);
 
 // app.get(
 //   '/api/definitions/:uid',

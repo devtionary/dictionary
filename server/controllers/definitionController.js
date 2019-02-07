@@ -27,13 +27,13 @@ definitionController.getAllDefs = (req, res, next) => {
 //get top def
 definitionController.getDefsForWords = (req, res, next) => {
   let i = 0;
-  let stringBuilder = '(';
+  let words = [];
   for (let word of res.locals.words) {
-    stringBuilder += `'` + word.id + `', `;
+    words.push(word.id);
   }
-  stringBuilder = `${stringBuilder.substring(0, stringBuilder.length - 2)})`;
   const query = {
-    text: `SELECT * from definitions where wId in ${stringBuilder};`,
+    text: `SELECT * from definitions where wId = ANY ($1)`,
+    values: [words]
   };
   db.query(query)
     .then(result => {
@@ -64,8 +64,12 @@ definitionController.getDefByQueryType = (req, res, next) => {
     db.query(query)
       .then(result => {
         //query all the definitions
-        console.log(result);
-        res.send(result.rows);
+        let defsReduced = result.rows.reduce((acc, elem) => {
+          acc[elem.id] = elem; // or what ever object you want inside
+          return acc;
+        }, {});
+        res.locals.defs = defsReduced;
+        next();
       })
       .catch(err => {
         console.error(err);
