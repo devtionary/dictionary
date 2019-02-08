@@ -6,117 +6,157 @@ const db = require('./index.js');
 const votesController = {};
 
 votesController.voteAction = (req, res, next) => {
-  let did = req.body.did;
-  let typeofvote = req.body.typeofvote;
-  let uid = req.body.uid;
+    let did = req.body.did;
+    let typeofvote = req.body.typeofvote;
+    let uid = req.body.uid;
 
-  const query = {
-    name: 'check-votes',
-    text: 'SELECT * FROM votes WHERE did = $1 AND uid = $2',
-    values: [did, uid],
-  };
-  db.query(query)
-    .then(result => {
-      //query all the definitions
-      console.log(result);
-      if (result.rows.length <= 0) {
-        let queryStr =
-          'INSERT INTO votes(uid, did, typeofvote) VALUES($1, $2, $3)';
-        const query = {
-          name: 'add-new-vote',
-          text: queryStr,
-          values: [uid, did, typeofvote],
-        };
-        db.query(query)
-          .then(result => {
-            console.log('USER HAS VOTED A WORD');
-            res.send(result);
-          })
-          .catch(err => {
+    const query = {
+        name: 'check-votes',
+        text: 'SELECT * FROM votes WHERE did = $1 AND uid = $2',
+        values: [did, uid],
+    };
+    db.query(query)
+        .then(result => {
+            //query all the definitions
+            console.log(result);
+            if (result.rows.length <= 0) {
+                let queryStr =
+                    'INSERT INTO votes(uid, did, typeofvote) VALUES($1, $2, $3)';
+                const query = {
+                    name: 'add-new-vote',
+                    text: queryStr,
+                    values: [uid, did, typeofvote],
+                };
+                db.query(query)
+                    .then(result => {
+                        console.log('USER HAS VOTED A WORD');
+                        res.send(result);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).end();
+                    });
+            } else {
+                let queryStr =
+                    'UPDATE votes SET typeofvote = $1 WHERE uid = $2 AND did = $3';
+                const query = {
+                    name: 'update-vote',
+                    text: queryStr,
+                    values: [typeofvote, uid, did],
+                };
+                db.query(query)
+                    .then(result => {
+                        console.log('USER HAS UPDATED VOTE');
+                        res.send(result);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).end();
+                    });
+            }
+        })
+        .catch(err => {
             console.error(err);
             res.status(500).end();
-          });
-      } else {
-        let queryStr =
-          'UPDATE votes SET typeofvote = $1 WHERE uid = $2 AND did = $3';
-        const query = {
-          name: 'update-vote',
-          text: queryStr,
-          values: [typeofvote, uid, did],
-        };
-        db.query(query)
-          .then(result => {
-            console.log('USER HAS UPDATED VOTE');
-            res.send(result);
-          })
-          .catch(err => {
-            console.error(err);
-            res.status(500).end();
-          });
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
+        });
 };
 
 votesController.getDefVotes = (req, res, next) => {
-  const query = {
-    name: 'check-votes-by-user',
-    text:
-      'SELECT did, COUNT(uid), typeofvote FROM votes GROUP BY did, typeofvote ORDER BY did;',
-    values: [],
-  };
-  db.query(query)
-    .then(result => {
-      console.log('VOTES EXIST BY USER');
-      res.send(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
+    const query = {
+        name: 'check-votes-by-user',
+        text: 'SELECT did, COUNT(uid), typeofvote FROM votes GROUP BY did, typeofvote ORDER BY did;',
+        values: [],
+    };
+    db.query(query)
+        .then(result => {
+            console.log('VOTES EXIST BY USER');
+            res.send(result.rows);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).end();
+        });
 };
 
+votesController.getBothVotes = (req, res, next) => {
+    let dids = [];
+    // console.log(res.locals.wordDefinitions);
+    for(let i in res.locals.wordDefinitions) {
+        dids.push(res.locals.wordDefinitions[i]['id']);
+    }
+    console.log(dids);
+    const query = {
+        name: 'get-both-votes',
+            text: 'SELECT v1.did, v1.count, v1.typeofvote FROM (SELECT did, COUNT(uid), typeofvote \
+            FROM votes GROUP BY did, typeofvote ORDER BY did) v1 WHERE v1.did = ANY($1);',
+        values: [dids]
+    };
+    db.query(query)
+        .then((result) => {
+            console.log('GETTING BOTH VOTES');
+            for(let a = 0; a < result.rows.length; a++) {
+                for(let b = 0; b < res.locals.wordDefinitions.length; b++) {
+                    if(res.locals.wordDefinitions[b]['id'] === result.rows[a]['did']) {
+                        if(result.rows[a]['typeofvote'] === 'up') {
+                            res.locals.wordDefinitions[b]['upvote'] = result.rows[a]['count'];
+                        } else if(result.rows[a]['typeofvote'] === 'down') {
+                            res.locals.wordDefinitions[b]['downvote'] = result.rows[a]['count'];
+                        }
+                    }
+                }
+            }
+            res.send(res.locals.wordDefinitions);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).end();
+        })
+}
+
 votesController.getTopVoteByDefIds = (req, res, next) => {
-  let stringBuilder = '(';
-  for (let did of Object.keys(res.locals.defs)) {
-    stringBuilder += `'` + did + `', `;
-  }
-  stringBuilder = `${stringBuilder.substring(0, stringBuilder.length - 2)})`;
+    let stringBuilder = '(';
+    for (let did of Object.keys(res.locals.defs)) {
+        stringBuilder += `'` + did + `', `;
+    }
+    stringBuilder = `${stringBuilder.substring(0, stringBuilder.length - 2)})`;
 
-  const query = {
-    text: `SELECT * from votes where dId in ${stringBuilder};`,
-  };
-  db.query(query)
-    .then(result => {
-      const tally = {};
-      for (let vote of result.rows) {
-        let count = tally[vote.did] === undefined ? 0 : tally[vote.did];
-        if (vote.typeofvote === 'up') tally[vote.did] = count + 1;
-        else tally[vote.did] = count - 1;
-      }
+    const query = {
+        text: `SELECT * from votes where dId in ${stringBuilder};`,
+    };
+    db.query(query)
+        .then(result => {
+            const tally = {};
+            for (let vote of result.rows) {
+                let count = tally[vote.did] === undefined ? 0 : tally[vote.did];
+                if (vote.typeofvote === 'up') tally[vote.did] = count + 1;
+                else tally[vote.did] = count - 1;
+            }
 
-      const topDefs = {};
-      for (let did of Object.keys(tally)) {
-        const wid = res.locals.defs[did].wid;
-        if (topDefs[wid] === undefined) {
-          topDefs[wid] = { did: did, tally: tally[did] };
-        } else if (tally[did] > topDefs[wid].tally) {
-          topDefs[wid] = { did: did, tally: tally[did] };
-        }
-      }
+            const topDefs = {};
+            for (let did of Object.keys(tally)) {
+                const wid = res.locals.defs[did].wid;
+                if (topDefs[wid] === undefined) {
+                    topDefs[wid] = {
+                        did: did,
+                        tally: tally[did]
+                    };
+                } else if (tally[did] > topDefs[wid].tally) {
+                    topDefs[wid] = {
+                        did: did,
+                        tally: tally[did]
+                    };
+                }
+            }
 
-      let i = 0;
-      for (let wid of Object.keys(topDefs)) {
-        res.locals.words[i++].definition = res.locals.defs[topDefs[wid].did];
-      }
-      res.send(res.locals.words);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
+            let i = 0;
+            for (let wid of Object.keys(topDefs)) {
+                res.locals.words[i++].definition = res.locals.defs[topDefs[wid].did];
+            }
+            res.send(res.locals.words);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).end();
+        });
 };
 module.exports = votesController;

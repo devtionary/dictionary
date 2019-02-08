@@ -66,13 +66,41 @@ wordController.getRelatedWords = (req, res, next) => {
       if (result.rows.length > 0) {
         res.locals.words = result.rows;
         next();
-      } else res.send([]); //Send an empty array if the word wasn't found
+      } else { 
+        res.send([]); 
+      } //Send an empty array if the word wasn't found
     })
     .catch(err => {
       console.error(err);
       res.status(500).end();
     });
 };
+
+wordController.getWordsOfDay = (req, res, next) => {
+  let queryStr = 'SELECT d.id, d.wid, d.uid, a.term, a.definition FROM definitions d, \
+  (SELECT d.wid, w.term, MIN(d.text) AS definition \
+  FROM words w, definitions d WHERE w.id = d.wid GROUP BY d.wid, w.term ORDER BY RANDOM() LIMIT 3) \
+  a WHERE a.definition = d.text';
+  // SELECT (v1.did), v1.count, v1.typeofvote FROM (SELECT did, COUNT(uid), typeofvote FROM votes GROUP BY did, typeofvote ORDER BY did) v1;
+  const query = {
+    text: queryStr,
+  };
+  db.query(query)
+    .then(result => {
+      //query all the words
+      if (result.rows.length > 0) {
+        res.locals.wordDefinitions = result.rows;
+        console.log(result.rows);
+        next();
+      } else { 
+        res.send([]); 
+      } //Send an empty array if the word wasn't found
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
+}
 
 //create word
 wordController.addTerm = (req, res, next) => {

@@ -30,7 +30,24 @@ exampleController.getExamples = (req,res,next) => {
       res.locals.dataList = data;
       next();
     })
-  
+
+    // const did = req.query.did;
+    
+    // const query = {
+    //   name: 'check-votes-by-user',
+    //   text:
+    //     'SELECT did, COUNT(uid), typeofvote FROM votes GROUP BY did, typeofvote ORDER BY did;',
+    //   values: [did],
+    // };
+    // db.query(query)
+    //   .then(result => {
+    //     console.log('VOTES EXIST BY USER');
+    //     res.send(result.rows);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //     res.status(500).end();
+    //   });
   }
 
   

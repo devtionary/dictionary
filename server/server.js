@@ -21,6 +21,11 @@ app.post('/api/auth/', userController.isUser);
 
 //words
 
+app.get('/api/get-words-of-the-day/',
+  wordsController.getWordsOfDay,
+  votesController.getBothVotes
+);
+
 app.post('/api/words/', wordsController.addTerm);
 
 app.get(
